@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.text.Element;
 import javax.swing.text.TableView.TableRow;
-import static org.rendersnake.HtmlAttributesFactory.class_;
-import org.rendersnake.HtmlCanvas;
 
 
 public class Tecnoweb_basic_email {
