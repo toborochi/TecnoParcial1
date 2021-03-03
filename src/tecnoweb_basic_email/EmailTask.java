@@ -28,7 +28,7 @@ public class EmailTask implements Runnable {
 
             // Validar Subject
             // Switch
-            smtp.sendMail(this.to, "Consulta", "Hola");
+            //smtp.sendMail(this.to, "Consulta", "Hola");
             smtp.logOut();
             smtp.close();
         } catch (IOException ex) {
