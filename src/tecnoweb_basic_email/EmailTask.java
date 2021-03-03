@@ -21,8 +21,11 @@ public class EmailTask implements Runnable
             smtp.connect();
             smtp.logIn();
             
-            smtp.sendMail(this.to, this.subject,"Hola");
+            // Validar Subject
             
+            // Switch
+            
+            smtp.sendMail(this.to,"Consulta","Hola");
             smtp.logOut();
             smtp.close();
         } catch (IOException ex) {
