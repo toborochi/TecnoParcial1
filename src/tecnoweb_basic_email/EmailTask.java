@@ -14,7 +14,7 @@ public class EmailTask implements Runnable {
     public EmailTask(String to, String subject) {
         this.to = to;
         this.subject = subject;
-        this.nOdontologo= new NOdontologo();
+        this.nOdontologo = new NOdontologo();
     }
 
     @Override
@@ -63,7 +63,10 @@ public class EmailTask implements Runnable {
         }
         return false;
     }
-
+    /**
+     * Valida y registra el odontologo
+     * @param datos del odontologo en un vector de strings
+     */
     public void registrarOdontologo(String[] datos) {
         try {
             String respuesta = "";
@@ -75,10 +78,9 @@ public class EmailTask implements Runnable {
                 smtp.sendMail(this.to, "", "Cantidad de parametros incorrecta:" + datos.length);
                 return;
             }
-//        respuesta += !isNumericEntero(datos[0]) ? "CI no valido \n " : "";
+            respuesta += !isInteger(datos[0]) ? "CI no valido \n " : "";
             respuesta += datos[1].length() <= 0 ? "El nombre no es valido \n" : "";
-
-//        respuesta += !isNumericEntero(datos[2]) ? "El numero de celular no es valido \n" : "";
+            respuesta += !isInteger(datos[2]) ? "El numero de celular no es valido \n" : "";
             respuesta += datos[3].length() < 10 ? "La fecha de nacimiento no es valido \n" : "";
             respuesta += datos[4].length() < 1 ? "El genero del abogado  no es valido \n" : "";
             respuesta += datos[5].length() <= 0 ? "Mail no valido \n" : "";
@@ -91,5 +93,21 @@ public class EmailTask implements Runnable {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+    /**
+     * Funcion para verificar si una string es un entero
+     * @param s
+     * @return 
+     */
+    public static boolean isInteger(String s) {
+        try {
+            Integer.parseInt(s);
+        } catch (NumberFormatException e) {
+            return false;
+        } catch (NullPointerException e) {
+            return false;
+        }
+        // only got here if we didn't return false
+        return true;
     }
 }
