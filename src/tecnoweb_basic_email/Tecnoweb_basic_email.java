@@ -2,10 +2,6 @@
 package tecnoweb_basic_email;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.text.Element;
-import javax.swing.text.TableView.TableRow;
 
 
 public class Tecnoweb_basic_email {
