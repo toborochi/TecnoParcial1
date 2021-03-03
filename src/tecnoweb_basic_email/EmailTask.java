@@ -14,6 +14,7 @@ public class EmailTask implements Runnable {
     public EmailTask(String to, String subject) {
         this.to = to;
         this.subject = subject;
+        this.nOdontologo= new NOdontologo();
     }
 
     @Override
@@ -48,7 +49,7 @@ public class EmailTask implements Runnable {
                 datos[i] = datos[i].trim();
             }
         }
-        switch (this.subject) {
+        switch (encabezado) {
 
             // CU4: Gestionar Abogado
             case "reg_odontologo":
@@ -88,6 +89,7 @@ public class EmailTask implements Runnable {
             }
             smtp.sendMail(this.to, "", respuesta);
         } catch (Exception e) {
+            System.out.println(e);
         }
     }
 }
