@@ -100,24 +100,26 @@ public class POP3 {
     }
 
     public String getSubject(String mail) {
-        String lines[] = mail.split("\\r?\\n");
+        String lines[] = mail.split("\\n");
         //System.out.println("Tamano " + lines.length);
         String line = "";
+        int pos_found = -1;
         boolean found = false;
         for (int i = 0; i < lines.length; ++i) {
             line = lines[i];
             if (line.contains("Subject:")) {
                 found = true;
+                pos_found=i;
                 break;
             }
         }
         
         if(found){
         String sub = "Subject:";
-        
+        String fila = lines[pos_found+1];
         int pos = line.indexOf(sub);
 
-        return line.substring(pos+sub.length()+1,line.length() );
+        return line.substring(pos+sub.length()+1,line.length())+fila;
         }else{
             return "";
         }

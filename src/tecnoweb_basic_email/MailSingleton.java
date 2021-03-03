@@ -52,6 +52,7 @@ public class MailSingleton {
             System.out.println("Respondiendo a "+i);
             
             String mensaje = pop3.getMail(Integer.toString(i));
+            System.out.println("Mensaje"+mensaje);
             String emisor = pop3.getFrom(mensaje);
             String subject = pop3.getSubject(mensaje);
             
