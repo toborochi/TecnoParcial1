@@ -1,6 +1,7 @@
 
 package tecnoweb_basic_email;
 
+import Datos.DConexion;
 import java.io.IOException;
 
 
@@ -42,6 +43,7 @@ public class Tecnoweb_basic_email {
         System.out.println(html.toHtml());
         */
         
+        DConexion dbc = new DConexion();
         
         int emails = MailSingleton.getInstance().getEmails(); 
         while(true){
@@ -55,6 +57,7 @@ public class Tecnoweb_basic_email {
             
             System.out.println("Waiting to check new emails...");
             Thread.sleep(8000);
+            dbc.query("INSERT INTO ztable(id_test,name_test) VALUES (2,'CCC')");
         }
         
     }
