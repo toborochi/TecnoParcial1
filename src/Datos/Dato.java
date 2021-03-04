@@ -1,25 +1,28 @@
 package Datos;
 
-import Datos.DConexion;
 import java.util.regex.*;
 import java.sql.ResultSet;
 
-public class Dato {
-    
-    
-    DConexion dbc;
-    String TABLE;
-    String[] COLUMNS;
+abstract class Dato {
 
-    private boolean isNumber(Object arg) {
-        String regex = "^(\\d+(\\.\\d+)?)$";
-        return Pattern.matches(regex, String.valueOf(arg));
-    }
+    protected String TABLE;
+    protected String[] COLUMNS;
+    private final DConexion dbc;
+
     
+    public Dato() {
+        this.dbc = new DConexion();
+    }
+
     public Dato(String table, String[] Columns) {
         this.TABLE = table;
         this.COLUMNS = Columns;
         this.dbc = new DConexion();
+    }
+
+    private boolean isNumber(Object arg) {
+        String regex = "^(\\d+(\\.\\d+)?)$";
+        return Pattern.matches(regex, String.valueOf(arg));
     }
 
     public ResultSet listar() {
@@ -31,49 +34,47 @@ public class Dato {
         String COLS = "";
         String VALUES = "";
 
-        String regex = "^(\\d+(\\.\\d+)?)$";
-        
         for (int i = 0; i < COLUMNS.length; i++) {
             if (!isNumber(args[i])) {
-                args[i] = "'" + args[i] + "'"; 
+                args[i] = "'" + args[i] + "'";
             }
-            
-            if (i == COLUMNS.length -1) {
+
+            if (i == COLUMNS.length - 1) {
                 VALUES += "%s";
                 COLS += COLUMNS[i];
             } else {
                 VALUES += "%s,";
                 COLS += COLUMNS[i] + ",";
-            }                      
+            }
         }
 
         String sql = String.format(
-            "INSERT INTO " + TABLE + "(" + COLS + ") VALUES (" + VALUES + ")",
-            args
+                "INSERT INTO " + TABLE + "(" + COLS + ") VALUES (" + VALUES + ")",
+                args
         );
-        
-        return  (boolean) dbc.query(sql);
+
+        return (boolean) dbc.query(sql);
     }
 
     public boolean editar(Object args[]) {
         String VALUES = "";
-        for (int i = 0; i < COLUMNS.length -1; i++) {
+        for (int i = 0; i < COLUMNS.length - 1; i++) {
             if (!isNumber(args[i])) {
                 args[i] = "'" + args[i] + "'";
             }
-            VALUES += (i == COLUMNS.length - 2) ? "= %s, " :" = %s ";
+            VALUES += (i == COLUMNS.length - 2) ? "= %s, " : " = %s ";
         }
-        
+
         String sql = String.format(
-            "UPDATE " + TABLE + "SET " + VALUES + "WHERE id = %s",
-            args
+                "UPDATE " + TABLE + "SET " + VALUES + "WHERE id = %s",
+                args
         );
-        
+
         return (boolean) dbc.query(sql);
     }
 
     public boolean eliminar(String id) {
-        String sql = String.format("DELETE FROM "+ TABLE +" WHERE id = %s", id);
+        String sql = String.format("DELETE FROM " + TABLE + " WHERE id = %s", id);
         return (boolean) dbc.query(sql);
     }
 }

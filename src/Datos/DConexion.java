@@ -1,13 +1,6 @@
 package Datos;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Arrays;
+import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,7 +20,6 @@ public class DConexion {
         try {
             Class.forName(this.driver);
             con = (Connection) DriverManager.getConnection(this.url, this.user, this.password);
-
         } catch (SQLException e) {
             System.err.println(e);
         } catch (ClassNotFoundException ex) {
@@ -40,7 +32,7 @@ public class DConexion {
         try {
             Class.forName(this.driver);
             con = DriverManager.getConnection(url, user, password);
-            System.out.println("\033[32;1;2mDRIVER CONNECTED!\033[0m");
+            System.out.println("\033[32;1;2mCONNECTION OPENED!\033[0m");
         } catch (ClassNotFoundException | SQLException e) {
             Logger.getLogger(DConexion.class.getName()).log(Level.SEVERE, null, e);
             System.err.println("ERROR ON CONNECTING!");
@@ -50,7 +42,6 @@ public class DConexion {
     public void close() {
         try {
             con.close();
-            System.out.println("CONNECTION CLOSE!");
             System.out.println("\033[32;1;2mCONNECTION CLOSED!!\033[0m");
         } catch (SQLException ex) {
             Logger.getLogger(DConexion.class.getName()).log(Level.SEVERE, null, ex);
@@ -61,21 +52,19 @@ public class DConexion {
     public Object query(String query) {
         Statement statement;
         Object resultSet = null;
-        
         String m = query.toLowerCase();
         boolean type = m.contains("select");
-        
-        connect();
+
         try {
+            connect();
             statement = (Statement) con.createStatement();
-            
-            if(type){
+
+            if (type) {
                 resultSet = statement.executeQuery(query);
-            }else{
-                resultSet = (statement.executeUpdate(query)>=0);
+            } else {
+                resultSet = (statement.executeUpdate(query) >= 0);
             }
-            
-            
+
         } catch (SQLException e) {
             Logger.getLogger(DConexion.class.getName()).log(Level.SEVERE, null, e);
         } finally {
