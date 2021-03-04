@@ -1,77 +1,86 @@
 package Datos;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 public class DConexion {
-    
-    public static void main(String[] args) {
-        System.out.println("HOLA MUNDO");
-    }
 
+    //Declaramos las constantes primero 
     private final String base = "db_grupo18sc";
     private final String user = "grupo18sc";
     private final String password = "grup018grup018";
     private final String url = "jdbc:postgresql://tecnoweb.org.bo:5432/" + base;
     private final String driver = "org.postgresql.Driver";
-    private Connection con = null;
+    private Connection con = null;//Variable para obtener la conexion y guardarla 
 
     public DConexion() {
+
     }
 
-    public Connection getConexion() throws SQLException, ClassNotFoundException {
-        Class.forName(this.driver);
-        con = (Connection) DriverManager.getConnection(this.url, this.user, this.password);
+    //Metodo getConexion donde se hará la conexion
+    public Connection getConexion() {
+        try {
+            //Colocamos la ruta del Driver 
+            //Controlador para realizar la conexion 
+            Class.forName(this.driver);
+            //La variable la igualamos a la conexion 
+            con = (Connection) DriverManager.getConnection(this.url, this.user, this.password);
+
+        } catch (SQLException e) {
+            System.err.println(e);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DConexion.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return con;
     }
+    
+    
+    public void connect() {
 
-    public void connect() throws ClassNotFoundException, SQLException {
-        Class.forName(this.driver);
-        con = DriverManager.getConnection(url, user, password);
-        System.out.println("CONNECTION OPEN!");
-    }
-
-    public void close() throws SQLException {
-        con.close();
-        System.out.println("CONNECTION CLOSE!");
-    }
-
-    public ResultSet query(String query) throws ClassNotFoundException, SQLException {
-        Statement statement;
-        ResultSet resultSet = null;
-
-        connect();
-        statement = (Statement) con.createStatement();
-        resultSet = statement.executeQuery(query);
-        close();
-
-        return resultSet;
-    }
-
-    public ResultSet query(String query, String[] parametros) {
-
-        PreparedStatement consulta;
-        ResultSet resultado = null;
-
-        connect();
         try {
-            consulta = (PreparedStatement) con.prepareStatement(query);
-            for (int i = 0; i < parametros.length; i++) {
-               
-               
-            }
-
-            resultado = consulta.executeQuery();
-            return resultado;
-        } catch (SQLException e) {
+            Class.forName("org.postgresql.Driver");
+            con = DriverManager.getConnection(url, user, password);
+            System.out.println("CONNECTED!");
+        } catch (ClassNotFoundException | SQLException e) {
             Logger.getLogger(DConexion.class.getName()).log(Level.SEVERE, null, e);
-        } finally {
+            System.out.println("ERROR ON CONNECTING!");
+        }
+    }
+    
+    public void close() {
+
+        try {
+            con.close();
+            System.out.println("CLOSING CONNECTION!");
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DConexion.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("ERROR CLOSING CONNECTION!");
+        }
+    }
+    
+    public ResultSet query(String query){
+        
+        Statement Consulta;
+        ResultSet resultado = null;
+        
+        connect();
+        try{
+            Consulta = (Statement) con.createStatement();
+            resultado = Consulta.executeQuery(query);
+            return resultado;
+        }catch (SQLException e) {
+            Logger.getLogger(DConexion.class.getName()).log(Level.SEVERE, null, e);
+        }finally{
             close();
             return resultado;
         }
     }
-
-   
 }
