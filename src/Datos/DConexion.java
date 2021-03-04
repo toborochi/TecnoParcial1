@@ -1,6 +1,8 @@
 package Datos;
 
+import java.lang.reflect.Method;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import utils.ParseHelper;
 
 public class DConexion {
 
@@ -40,8 +43,7 @@ public class DConexion {
         }
         return con;
     }
-    
-    
+
     public void connect() {
 
         try {
@@ -53,7 +55,7 @@ public class DConexion {
             System.out.println("ERROR ON CONNECTING!");
         }
     }
-    
+
     public void close() {
 
         try {
@@ -65,22 +67,69 @@ public class DConexion {
             System.out.println("ERROR CLOSING CONNECTION!");
         }
     }
-    
-    public ResultSet query(String query){
-        
+
+    public ResultSet query(String query) {
+
         Statement Consulta;
         ResultSet resultado = null;
-        
+
         connect();
-        try{
+        try {
             Consulta = (Statement) con.createStatement();
             resultado = Consulta.executeQuery(query);
             return resultado;
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             Logger.getLogger(DConexion.class.getName()).log(Level.SEVERE, null, e);
-        }finally{
+        } finally {
             close();
             return resultado;
         }
+    }
+
+    public ResultSet query(String query, String[] parametros) {
+
+        PreparedStatement consulta;
+        ResultSet resultado = null;
+
+        connect();
+        try {
+            consulta = (PreparedStatement) con.prepareStatement(query);
+            for (int i = 0; i < parametros.length; i++) {
+                String parametro = parametros[i];
+                Method metodo = getMethodToParse(parametro);
+                Object parametroParseado=parseParam(parametro);
+                metodo.invoke(consulta, parametroParseado);
+               
+            }
+
+            resultado = consulta.executeQuery();
+            return resultado;
+        } catch (SQLException e) {
+            Logger.getLogger(DConexion.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            close();
+            return resultado;
+        }
+    }
+
+    /**
+     * Verifica el tipo de dato del parametro y retorna la funcion adecuada para
+     * parsearla y ponerla al statement
+     *
+     * @param parametro
+     * @return
+     * @throws NoSuchMethodException
+     */
+    private Method getMethodToParse(String parametro) throws NoSuchMethodException {
+        // preguntar que tipo es el parametro
+        if (ParseHelper.tryParseDate(parametro)) {
+            return PreparedStatement.class.getMethod("setDate", int.class, Date.class);
+        } else if (ParseHelper.tryParseBoolean(parametro)) {
+            return PreparedStatement.class.getMethod("setBoolean", int.class, boolean.class);
+        } else if (ParseHelper.tryParseInt(parametro)) {
+            return PreparedStatement.class.getMethod("setInt", int.class, int.class);
+        }
+        return PreparedStatement.class.getMethod("setString", int.class, String.class);
+
     }
 }
