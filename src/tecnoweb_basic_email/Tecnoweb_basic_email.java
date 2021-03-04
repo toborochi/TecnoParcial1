@@ -2,7 +2,9 @@
 package tecnoweb_basic_email;
 
 
+import Datos.DZTable;
 import java.io.IOException;
+import java.sql.ResultSet;
 
 
 public class Tecnoweb_basic_email {
@@ -43,7 +45,7 @@ public class Tecnoweb_basic_email {
         System.out.println(html.toHtml());
         */
         
-        
+        DZTable dzt = new DZTable();
         
         int emails = MailSingleton.getInstance().getEmails(); 
         while(true){

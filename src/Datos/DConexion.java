@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -57,13 +58,24 @@ public class DConexion {
         }
     }
 
-    public ResultSet query(String query) {
+    public Object query(String query) {
         Statement statement;
-        ResultSet resultSet = null;
+        Object resultSet = null;
+        
+        String m = query.toLowerCase();
+        boolean type = m.contains("select");
+        
         connect();
         try {
             statement = (Statement) con.createStatement();
-            resultSet = statement.executeQuery(query);
+            
+            if(type){
+                resultSet = statement.executeQuery(query);
+            }else{
+                resultSet = (statement.executeUpdate(query)>=0);
+            }
+            
+            
         } catch (SQLException e) {
             Logger.getLogger(DConexion.class.getName()).log(Level.SEVERE, null, e);
         } finally {
