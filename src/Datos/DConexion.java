@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import utils.ParseHelper;
+
 
 public class DConexion {
 
@@ -95,10 +95,7 @@ public class DConexion {
         try {
             consulta = (PreparedStatement) con.prepareStatement(query);
             for (int i = 0; i < parametros.length; i++) {
-                String parametro = parametros[i];
-                Method metodo = getMethodToParse(parametro);
-                Object parametroParseado=parseParam(parametro);
-                metodo.invoke(consulta, parametroParseado);
+               
                
             }
 
@@ -112,24 +109,5 @@ public class DConexion {
         }
     }
 
-    /**
-     * Verifica el tipo de dato del parametro y retorna la funcion adecuada para
-     * parsearla y ponerla al statement
-     *
-     * @param parametro
-     * @return
-     * @throws NoSuchMethodException
-     */
-    private Method getMethodToParse(String parametro) throws NoSuchMethodException {
-        // preguntar que tipo es el parametro
-        if (ParseHelper.tryParseDate(parametro)) {
-            return PreparedStatement.class.getMethod("setDate", int.class, Date.class);
-        } else if (ParseHelper.tryParseBoolean(parametro)) {
-            return PreparedStatement.class.getMethod("setBoolean", int.class, boolean.class);
-        } else if (ParseHelper.tryParseInt(parametro)) {
-            return PreparedStatement.class.getMethod("setInt", int.class, int.class);
-        }
-        return PreparedStatement.class.getMethod("setString", int.class, String.class);
-
-    }
+   
 }
