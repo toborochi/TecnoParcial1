@@ -1,25 +1,24 @@
+package Datos;
 
-package ORM;
-
-import java.util.LinkedList;
 import Datos.DConexion;
 import java.sql.ResultSet;
+import java.util.LinkedList;
 
 public class Dato {
-    
+ 
     DConexion dbc;
     String table_name;
     String[] columns;
     
     public Dato(String TableName, String[] Columns){
-        table_name=TableName;
-        columns=Columns;
-        dbc = new DConexion();
+        this.columns=Columns;
+        this.table_name=TableName;
+        this.dbc = new DConexion();
     }
     
     public ResultSet listar(){
-        
         String sql = String.format("SELECT * FROM %s ", table_name);
+        
         return dbc.query(sql);
     }
     
@@ -37,5 +36,4 @@ public class Dato {
         String sql = String.format("DELETE FROM %s WHERE %s = %s;", table_name,columns[0],id);
         return dbc.query(sql);
     }
-    
 }
