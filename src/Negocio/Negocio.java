@@ -210,32 +210,25 @@ abstract class Negocio {
 
     public String TablaHTML(String title) throws IOException {
         Tabla data = this.dato.listar();
-        // this.html.style().write(styles)._style();
-        HtmlCanvas root = this.html.html().div(class_("wrapper"));
-        HtmlCanvas h1 = root.h1().content(title)._h1();
-//        <table>
-        HtmlCanvas table = root.table(class_(" c-table"));
-//        <thead>
-        HtmlCanvas tag = table.thead(class_("c-table__header")).tr();
+        this.html.style().write(styles)._style();
+        this.html.html().div(class_("wrapper"));
+        this.html.table(class_(" c-table"));
+
+        this.html.thead(class_("c-table__header")).tr();
         for (String nombre : data.nombres) {
-//            tag.th(class_("c-table__col-label")).content(nombre)._th();
+            this.html.th(class_("c-table__col-label")).write(nombre)._th();
         }
-        tag._tr()._thead();
-//        </thead>
-//        <tbody>
-        tag = table.tbody();
+        this.html._tr()._thead();
+        this.html.tbody();
         for (int i = 0; i < data.getFila(); i++) {
-            HtmlCanvas row = tag.tr();
+            this.html.tr();
             for (int j = 0; j < data.getColumna(); j++) {
-//                row.td(class_("c-table__cell")).content(data.getData(i, j))._td();
+                this.html.td(class_("c-table__cell")).write(data.getData(i, j))._td();
             }
-            row._tr();
+            this.html._tr();
         }
-        tag._tbody();
-//        </tbody>
-        table._table();
-//        </table>
-        root._div()._html();
+        
+        this.html._tbody()._table()._div()._html();
 
         String innerHTML = this.html.toHtml();
         this.html = new HtmlCanvas();
