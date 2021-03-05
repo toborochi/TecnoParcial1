@@ -1,6 +1,4 @@
-
 package tecnoweb_basic_email;
-
 
 import Datos.DZTable;
 import Datos.Tabla;
@@ -11,12 +9,12 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import Negocio.*;
 
 public class Tecnoweb_basic_email {
 
-    public static int MAX_T=20;
-    
+    public static int MAX_T = 20;
+
     public static void main(String[] args) throws InterruptedException, IOException {
 
         /*
@@ -49,23 +47,24 @@ public class Tecnoweb_basic_email {
         html._table();
         
         System.out.println(html.toHtml());
-        */
-        
-        DZTable dzt = new DZTable();
-        
-        int emails = MailSingleton.getInstance().getEmails(); 
-        while(true){
-            
-            int emails_query =MailSingleton.getInstance().getEmails();
-            
-            if(emails_query>emails){
-                MailSingleton.getInstance().sendMail(emails+1,emails_query);
-                emails=emails_query;
+         */
+        // DZTable dzt = new DZTable();
+        NEspecialidad nes = new NEspecialidad();
+        System.out.println(nes.crear(new Object[]{"nombre"}));
+
+        int emails = MailSingleton.getInstance().getEmails();
+        while (true) {
+
+            int emails_query = MailSingleton.getInstance().getEmails();
+
+            if (emails_query > emails) {
+                MailSingleton.getInstance().sendMail(emails + 1, emails_query);
+                emails = emails_query;
             }
-            
+
             System.out.println("Waiting to check new emails...");
             Thread.sleep(8000);
-            
+
             /*
             Tabla ta = new Tabla(dzt.listar());
             System.out.println(Arrays.toString(ta.nombres));
@@ -76,8 +75,7 @@ public class Tecnoweb_basic_email {
                 System.out.println("");
             }*/
         }
-        
-    }
-    
-}
 
+    }
+
+}
