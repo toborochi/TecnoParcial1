@@ -3,7 +3,7 @@ package Datos;
 import java.util.regex.*;
 import java.sql.ResultSet;
 
-abstract class Dato {
+public class Dato {
 
     protected String TABLE;
     protected String[] COLUMNS;
