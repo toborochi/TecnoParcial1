@@ -9,7 +9,6 @@ public class Dato {
     protected String[] COLUMNS;
     private final DConexion dbc;
 
-    
     public Dato() {
         this.dbc = new DConexion();
     }
@@ -27,6 +26,11 @@ public class Dato {
 
     public Tabla listar() {
         String sql = "SELECT * FROM " + TABLE;
+        return new Tabla((ResultSet) dbc.query(sql));
+    }
+
+    public Tabla buscar(String id) {
+        String sql = "SELECT * FROM " + TABLE + "WHERE id = " + id;
         return new Tabla((ResultSet) dbc.query(sql));
     }
 
