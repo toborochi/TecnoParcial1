@@ -7,6 +7,7 @@ abstract class Dato {
 
     protected String TABLE;
     protected String[] COLUMNS;
+    protected String[] TYPES;
     private final DConexion dbc;
 
     
@@ -76,5 +77,12 @@ abstract class Dato {
     public boolean eliminar(String id) {
         String sql = String.format("DELETE FROM " + TABLE + " WHERE id = %s", id);
         return (boolean) dbc.query(sql);
+    }
+    class Datatypes {
+        static final String STRING   ="string";
+        static final String INTEGER   ="integer";
+        static final String DATE   ="date";
+        static final String FLOAT   ="float";
+        static final String TIME   ="time";
     }
 }
