@@ -211,9 +211,10 @@ abstract class Negocio {
     public String TablaHTML(String title) throws IOException {
         Tabla data = this.dato.listar();
         this.html.style().write(styles)._style();
+        
         this.html.html().div(class_("wrapper"));
-        this.html.table(class_(" c-table"));
-
+        this.html.h1().write(title)._h1();
+        this.html.table(class_("c-table"));
         this.html.thead(class_("c-table__header")).tr();
         for (String nombre : data.nombres) {
             this.html.th(class_("c-table__col-label")).write(nombre)._th();
