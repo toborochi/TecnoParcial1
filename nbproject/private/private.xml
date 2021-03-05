@@ -3,15 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Asus/Documents/NetBeansProjects/tecnoweb_basic_email/src/Datos/DUsuario.java</file>
-            <file>file:/C:/Users/Asus/Documents/NetBeansProjects/tecnoweb_basic_email/src/Datos/DOdontologo.java</file>
-            <file>file:/C:/Users/Asus/Documents/NetBeansProjects/tecnoweb_basic_email/src/tecnoweb_basic_email/EmailTask.java</file>
-            <file>file:/C:/Users/Asus/Documents/NetBeansProjects/tecnoweb_basic_email/src/Datos/Dato.java</file>
-            <file>file:/C:/Users/Asus/Documents/NetBeansProjects/tecnoweb_basic_email/src/tecnoweb_basic_email/Tecnoweb_basic_email.java</file>
-            <file>file:/C:/Users/Asus/Documents/NetBeansProjects/tecnoweb_basic_email/src/tecnoweb_basic_email/MailSingleton.java</file>
-            <file>file:/C:/Users/Asus/Documents/NetBeansProjects/tecnoweb_basic_email/src/Datos/DZTable.java</file>
-            <file>file:/C:/Users/Asus/Documents/NetBeansProjects/tecnoweb_basic_email/src/Negocio/NOdontologo.java</file>
-            <file>file:/C:/Users/Asus/Documents/NetBeansProjects/tecnoweb_basic_email/src/Datos/DConexion.java</file>
+            <file>file:/Users/cartory/NetBeansProjects/TecnoParcial1/src/Negocio/NConsulta.java</file>
+            <file>file:/Users/cartory/NetBeansProjects/TecnoParcial1/src/Negocio/NReceta.java</file>
+            <file>file:/Users/cartory/NetBeansProjects/TecnoParcial1/src/Negocio/NUsuario.java</file>
+            <file>file:/Users/cartory/NetBeansProjects/TecnoParcial1/src/Negocio/Negocio.java</file>
+            <file>file:/Users/cartory/NetBeansProjects/TecnoParcial1/src/Negocio/NEspecialidad.java</file>
+            <file>file:/Users/cartory/NetBeansProjects/TecnoParcial1/src/tecnoweb_basic_email/Tecnoweb_basic_email.java</file>
+            <file>file:/Users/cartory/NetBeansProjects/TecnoParcial1/src/Negocio/NPaciente.java</file>
+            <file>file:/Users/cartory/NetBeansProjects/TecnoParcial1/src/Negocio/NAgenda.java</file>
+            <file>file:/Users/cartory/NetBeansProjects/TecnoParcial1/src/Negocio/NCita.java</file>
         </group>
     </open-files>
 </project-private>
