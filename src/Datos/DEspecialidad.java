@@ -17,4 +17,14 @@ public class DEspecialidad extends Dato {
             "nombre"
         };
     }
+    public class DOdontologoEspecialidad extends Dato{
+        public DOdontologoEspecialidad(){
+           super();
+        this.TABLE = "odontologoespecialidad";
+        this.COLUMNS = new String[] {
+            "odontologoid","especialidadid"
+        }; 
+        }
+    }
 }
+
