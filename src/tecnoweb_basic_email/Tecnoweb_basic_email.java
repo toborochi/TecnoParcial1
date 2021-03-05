@@ -2,6 +2,7 @@ package tecnoweb_basic_email;
 
 import Datos.DZTable;
 import Datos.Tabla;
+import Negocio.NPaciente;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;

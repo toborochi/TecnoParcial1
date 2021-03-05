@@ -1,6 +1,7 @@
 package tecnoweb_basic_email;
 
 import Negocio.NOdontologo;
+import Negocio.NPaciente;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -10,6 +11,7 @@ public class EmailTask implements Runnable {
     SMTP smtp = new SMTP();
     String to, subject;
     NOdontologo nOdontologo;
+    NPaciente nPaciente;
 
     public EmailTask(String to, String subject) {
         this.to = to;
@@ -20,15 +22,15 @@ public class EmailTask implements Runnable {
     @Override
     public void run() {
         try {
-            this.verificarComandos();
+            String resultadoVerificacion=this.verificarComandos();
 
             System.out.println("Enviar a: " + this.to + ", Query: " + this.subject);
             smtp.connect();
             smtp.logIn();
-
+            
             // Validar Subject
             // Switch
-            //smtp.sendMail(this.to, "Consulta", "Hola");
+            smtp.sendMail(this.to, "Resultado", resultadoVerificacion);
             smtp.logOut();
             smtp.close();
         } catch (IOException ex) {
@@ -36,35 +38,31 @@ public class EmailTask implements Runnable {
         }
     }
 
-    public boolean verificarComandos() {
-
-        String sub = this.subject.trim();
-        String[] partesSubject = sub.split("\\[");
-        String encabezado = partesSubject[0];
-        String cuerpo[] = partesSubject[1].split("\\]");
+    public String verificarComandos() {
+        String encabezado = "";
         String datos[] = null;
-        if (cuerpo.length != 0) {
-            datos = cuerpo[0].split("\\;;");
-            for (int i = 0; i < datos.length; i++) {
-                datos[i] = datos[i].trim();
-            }
-        }
+        parseComando(encabezado, datos);
+         String mensaje="";
         switch (encabezado) {
 
             // CU4: Gestionar Abogado
             case "reg_odontologo":
                 this.registrarOdontologo(datos);
                 break;
-
+            case "crear_paciente":
+                nPaciente.crear(datos);
+                break;
             default:
-                String s = "La petición '" + this.subject + "' es incorrecta.";
+                mensaje = "La petición '" + this.subject + "' es incorrecta.";
 
                 break;
         }
-        return false;
+        return mensaje;
     }
+
     /**
      * Valida y registra el odontologo
+     *
      * @param datos del odontologo en un vector de strings
      */
     public void registrarOdontologo(String[] datos) {
@@ -94,10 +92,12 @@ public class EmailTask implements Runnable {
             System.out.println(e);
         }
     }
+
     /**
      * Funcion para verificar si una string es un entero
+     *
      * @param s
-     * @return 
+     * @return
      */
     public static boolean isInteger(String s) {
         try {
@@ -109,5 +109,23 @@ public class EmailTask implements Runnable {
         }
         // only got here if we didn't return false
         return true;
+    }
+    /**
+     * separa el encabezado y el cuerpo de un comando enviado en una string
+     * @param encabezado
+     * @param cuerpo 
+     */
+    private void parseComando(String encabezado, String[] datos) {
+        String sub = this.subject.trim();
+        String[] partesSubject = sub.split("\\[");
+        encabezado = partesSubject[0];
+         String cuerpo[] = partesSubject[1].split("\\]");
+        
+        if (cuerpo.length != 0) {
+            datos = cuerpo[0].split("\\;;");
+            for (int i = 0; i < datos.length; i++) {
+                datos[i] = datos[i].trim();
+            }
+        }
     }
 }
