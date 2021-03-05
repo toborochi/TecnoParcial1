@@ -4,6 +4,7 @@ package tecnoweb_basic_email;
 
 import Datos.DZTable;
 import Datos.Tabla;
+import Negocio.NPaciente;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -50,12 +51,13 @@ public class Tecnoweb_basic_email {
         
         System.out.println(html.toHtml());
         */
-        
+        NPaciente npac=new NPaciente();
+      
         DZTable dzt = new DZTable();
         
         int emails = MailSingleton.getInstance().getEmails(); 
         while(true){
-            
+              npac.validarDatos(new String[]{"123","Juan Perez","20290-12-01","75022"});
             int emails_query =MailSingleton.getInstance().getEmails();
             
             if(emails_query>emails){

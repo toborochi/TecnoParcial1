@@ -29,7 +29,12 @@ public class Dato {
         String sql = "SELECT * FROM " + TABLE;
         return new Tabla((ResultSet) dbc.query(sql));
     }
-
+    public String[]  getTypesList(){
+        return TYPES;
+    }
+    public String[]  getColums(){
+        return COLUMNS;
+    }
     public Tabla buscar(String id) {
         String sql = "SELECT * FROM " + TABLE + "WHERE id = " + id;
         return new Tabla((ResultSet) dbc.query(sql));
@@ -82,11 +87,11 @@ public class Dato {
         String sql = String.format("DELETE FROM " + TABLE + " WHERE id = %s", id);
         return (boolean) dbc.query(sql);
     }
-    class Datatypes {
-        static final String STRING   ="string";
-        static final String INTEGER   ="integer";
-        static final String DATE   ="date";
-        static final String FLOAT   ="float";
-        static final String TIME   ="time";
+    public static class Datatypes {
+        public static final String STRING   ="string";
+        public static final String INTEGER   ="integer";
+        public static final String DATE   ="date";
+        public static final String FLOAT   ="float";
+        public static final String TIME   ="time";
     }
 }

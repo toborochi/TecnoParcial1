@@ -27,7 +27,7 @@ public class EmailTask implements Runnable {
             System.out.println("Enviar a: " + this.to + ", Query: " + this.subject);
             smtp.connect();
             smtp.logIn();
-
+            
             // Validar Subject
             // Switch
             smtp.sendMail(this.to, "Resultado", resultadoVerificacion);
@@ -50,7 +50,7 @@ public class EmailTask implements Runnable {
                 this.registrarOdontologo(datos);
                 break;
             case "crear_paciente":
-                mensaje=nPaciente.validarYCrear(datos);
+                nPaciente.crear(datos);
                 break;
             default:
                 mensaje = "La petición '" + this.subject + "' es incorrecta.";

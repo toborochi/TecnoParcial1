@@ -3,15 +3,28 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Asus/Documents/NetBeansProjects/tecnoweb_basic_email/src/Datos/DUsuario.java</file>
-            <file>file:/C:/Users/Asus/Documents/NetBeansProjects/tecnoweb_basic_email/src/Datos/DOdontologo.java</file>
-            <file>file:/C:/Users/Asus/Documents/NetBeansProjects/tecnoweb_basic_email/src/tecnoweb_basic_email/EmailTask.java</file>
-            <file>file:/C:/Users/Asus/Documents/NetBeansProjects/tecnoweb_basic_email/src/Datos/Dato.java</file>
-            <file>file:/C:/Users/Asus/Documents/NetBeansProjects/tecnoweb_basic_email/src/tecnoweb_basic_email/Tecnoweb_basic_email.java</file>
-            <file>file:/C:/Users/Asus/Documents/NetBeansProjects/tecnoweb_basic_email/src/tecnoweb_basic_email/MailSingleton.java</file>
-            <file>file:/C:/Users/Asus/Documents/NetBeansProjects/tecnoweb_basic_email/src/Datos/DZTable.java</file>
-            <file>file:/C:/Users/Asus/Documents/NetBeansProjects/tecnoweb_basic_email/src/Negocio/NOdontologo.java</file>
-            <file>file:/C:/Users/Asus/Documents/NetBeansProjects/tecnoweb_basic_email/src/Datos/DConexion.java</file>
+            <file>file:/E:/Documentos/Universidad/2020/Tecnologia%20Web/Parciales/TecnoParcial1/src/Datos/DUsuario.java</file>
+            <file>file:/E:/Documentos/Universidad/2020/Tecnologia%20Web/Parciales/TecnoParcial1/src/Datos/Dato.java</file>
+            <file>file:/E:/Documentos/Universidad/2020/Tecnologia%20Web/Parciales/TecnoParcial1/src/tecnoweb_basic_email/Tecnoweb_basic_email.java</file>
+            <file>file:/E:/Documentos/Universidad/2020/Tecnologia%20Web/Parciales/TecnoParcial1/src/Datos/DOdontologo.java</file>
+            <file>file:/E:/Documentos/Universidad/2020/Tecnologia%20Web/Parciales/TecnoParcial1/src/Negocio/Negocio.java</file>
+            <file>file:/E:/Documentos/Universidad/2020/Tecnologia%20Web/Parciales/TecnoParcial1/src/Datos/DTratamiento.java</file>
+            <file>file:/E:/Documentos/Universidad/2020/Tecnologia%20Web/Parciales/TecnoParcial1/src/Datos/DReceta.java</file>
+            <file>file:/E:/Documentos/Universidad/2020/Tecnologia%20Web/Parciales/TecnoParcial1/src/tecnoweb_basic_email/POP3.java</file>
+            <file>file:/E:/Documentos/Universidad/2020/Tecnologia%20Web/Parciales/TecnoParcial1/src/Datos/DConsulta.java</file>
+            <file>file:/E:/Documentos/Universidad/2020/Tecnologia%20Web/Parciales/TecnoParcial1/src/Negocio/NOdontologo.java</file>
+            <file>file:/E:/Documentos/Universidad/2020/Tecnologia%20Web/Parciales/TecnoParcial1/src/Datos/DCita.java</file>
+            <file>file:/E:/Documentos/Universidad/2020/Tecnologia%20Web/Parciales/TecnoParcial1/src/Negocio/NUsuario.java</file>
+            <file>file:/E:/Documentos/Universidad/2020/Tecnologia%20Web/Parciales/TecnoParcial1/src/utils/ParseHelper.java</file>
+            <file>file:/E:/Documentos/Universidad/2020/Tecnologia%20Web/Parciales/TecnoParcial1/src/Negocio/NPaciente.java</file>
+            <file>file:/E:/Documentos/Universidad/2020/Tecnologia%20Web/Parciales/TecnoParcial1/src/Datos/DConexion.java</file>
+            <file>file:/E:/Documentos/Universidad/2020/Tecnologia%20Web/Parciales/TecnoParcial1/src/tecnoweb_basic_email/MailSingleton.java</file>
+            <file>file:/E:/Documentos/Universidad/2020/Tecnologia%20Web/Parciales/TecnoParcial1/src/Datos/DEspecialidad.java</file>
+            <file>file:/E:/Documentos/Universidad/2020/Tecnologia%20Web/Parciales/TecnoParcial1/src/tecnoweb_basic_email/SMTP.java</file>
+            <file>file:/E:/Documentos/Universidad/2020/Tecnologia%20Web/Parciales/TecnoParcial1/src/tecnoweb_basic_email/EmailTask.java</file>
+            <file>file:/E:/Documentos/Universidad/2020/Tecnologia%20Web/Parciales/TecnoParcial1/src/Datos/DPaciente.java</file>
+            <file>file:/E:/Documentos/Universidad/2020/Tecnologia%20Web/Parciales/TecnoParcial1/src/Datos/DAgenda.java</file>
+            <file>file:/E:/Documentos/Universidad/2020/Tecnologia%20Web/Parciales/TecnoParcial1/src/Datos/DZTable.java</file>
         </group>
     </open-files>
 </project-private>
