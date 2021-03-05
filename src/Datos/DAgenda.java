@@ -15,7 +15,7 @@ public class DAgenda extends Dato {
         this.TABLE = "agenda";
         this.COLUMNS = new String[] {
             "nombre",
-            "Odontologoid"
+            "odontologoid"
         };
     }
 }
