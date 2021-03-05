@@ -25,9 +25,9 @@ abstract class Dato {
         return Pattern.matches(regex, String.valueOf(arg));
     }
 
-    public ResultSet listar() {
+    public Tabla listar() {
         String sql = "SELECT * FROM " + TABLE;
-        return (ResultSet) dbc.query(sql);
+        return new Tabla((ResultSet) dbc.query(sql));
     }
 
     public boolean crear(Object args[]) {
