@@ -20,6 +20,10 @@ public class DUsuario {
     private String correo;
     private String contraseña;
 
+    public DUsuario() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public int getId() {
         return id;
     }

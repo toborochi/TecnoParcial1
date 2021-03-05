@@ -3,14 +3,13 @@ package Datos;
 import java.util.regex.*;
 import java.sql.ResultSet;
 
-abstract class Dato {
+public class Dato {
 
     protected String TABLE;
     protected String[] COLUMNS;
     protected String[] TYPES;
     private final DConexion dbc;
 
-    
     public Dato() {
         this.dbc = new DConexion();
     }
@@ -26,9 +25,14 @@ abstract class Dato {
         return Pattern.matches(regex, String.valueOf(arg));
     }
 
-    public ResultSet listar() {
+    public Tabla listar() {
         String sql = "SELECT * FROM " + TABLE;
-        return (ResultSet) dbc.query(sql);
+        return new Tabla((ResultSet) dbc.query(sql));
+    }
+
+    public Tabla buscar(String id) {
+        String sql = "SELECT * FROM " + TABLE + "WHERE id = " + id;
+        return new Tabla((ResultSet) dbc.query(sql));
     }
 
     public boolean crear(Object args[]) {

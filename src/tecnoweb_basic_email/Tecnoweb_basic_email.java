@@ -3,8 +3,14 @@ package tecnoweb_basic_email;
 
 
 import Datos.DZTable;
+import Datos.Tabla;
 import java.io.IOException;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class Tecnoweb_basic_email {
@@ -59,6 +65,16 @@ public class Tecnoweb_basic_email {
             
             System.out.println("Waiting to check new emails...");
             Thread.sleep(8000);
+            
+            /*
+            Tabla ta = new Tabla(dzt.listar());
+            System.out.println(Arrays.toString(ta.nombres));
+            for(int i=0;i<ta.getFila();++i){
+                for(int j=0;j<ta.getColumna();++j){
+                    System.out.print(ta.getData(i, j)+"\t");
+                }
+                System.out.println("");
+            }*/
         }
         
     }
