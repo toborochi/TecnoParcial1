@@ -14,10 +14,10 @@ public class DCita extends Dato {
         super();
         this.TABLE = "cita";
         this.COLUMNS = new String[] {
-            "horaInicio",
-            "horaFin",
-            "Pacienteid",
-            "Agendaid"
+            "horainicio",
+            "horafin",
+            "pacienteid",
+            "agendaid"
         };
     }
 }

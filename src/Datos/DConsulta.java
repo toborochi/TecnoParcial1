@@ -14,8 +14,8 @@ public class DConsulta extends Dato {
         super();
         this.TABLE = "consulta";
         this.COLUMNS = new String[] {
-            "fechaEmision",
-            "Citaid"
+            "fechaemision",
+            "citaid"
         };
     }
 }

@@ -16,7 +16,7 @@ public class DPaciente extends Dato {
         this.COLUMNS = new String[]{
             "ci",
             "nombre",
-            "fNac",
+            "fnac",
             "celular"
         };
     }

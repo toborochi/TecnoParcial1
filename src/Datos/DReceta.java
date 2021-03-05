@@ -18,7 +18,7 @@ public class DReceta extends Dato {
             "titulo",
             "descripcion",
             "fecha",
-            "Consultaid"
+            "consultaid"
         };
     }
 }
