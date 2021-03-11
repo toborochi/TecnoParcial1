@@ -23,6 +23,11 @@ public class EmailTask implements Runnable {
             this.verificarComandos();
 
             System.out.println("Enviar a: " + this.to + ", Query: " + this.subject);
+            // Validar Comando
+            
+            // Realizar consulta
+            
+            // Conectar a SMTP
             smtp.connect();
             smtp.logIn();
 
