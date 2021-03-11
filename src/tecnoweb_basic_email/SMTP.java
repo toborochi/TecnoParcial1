@@ -42,6 +42,12 @@ public class SMTP {
         this.output.writeBytes(COMAND);
         System.out.println("S:" + this.input.readLine());
     }
+    
+    public void reset() throws IOException {
+        COMAND = "RSET " + JMP;
+        this.output.writeBytes(COMAND);
+        System.out.println("S:" + this.input.readLine());
+    }
 
     public void logOut() throws IOException {
         COMAND = "QUIT" + JMP;

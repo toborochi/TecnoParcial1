@@ -2,11 +2,9 @@ package tecnoweb_basic_email;
 
 import Negocio.NOdontologo;
 import Negocio.NPaciente;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.concurrent.Callable;
 
-public class EmailTask implements Runnable {
+public class EmailTask implements Callable<MailSender> {
 
     SMTP smtp = new SMTP();
     String to, subject;
@@ -16,38 +14,13 @@ public class EmailTask implements Runnable {
     public EmailTask(String to, String subject) {
         this.to = to;
         this.subject = subject;
-        this.nOdontologo = new NOdontologo();
-    }
-
-    @Override
-    public void run() {
-        try {
-            String resultadoVerificacion=this.verificarComandos();
-
-            System.out.println("Enviar a: " + this.to + ", Query: " + this.subject);
-            // Validar Comando
-            
-            // Realizar consulta
-            
-            // Conectar a SMTP
-            smtp.connect();
-            smtp.logIn();
-            
-            // Validar Subject
-            // Switch
-            smtp.sendMail(this.to, "Resultado", resultadoVerificacion);
-            smtp.logOut();
-            smtp.close();
-        } catch (IOException ex) {
-            Logger.getLogger(EmailTask.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     public String verificarComandos() {
         String encabezado = "";
         String datos[] = null;
         parseComando(encabezado, datos);
-         String mensaje="";
+        String mensaje = "";
         switch (encabezado) {
 
             // CU4: Gestionar Abogado
@@ -115,22 +88,36 @@ public class EmailTask implements Runnable {
         // only got here if we didn't return false
         return true;
     }
+
     /**
      * separa el encabezado y el cuerpo de un comando enviado en una string
+     *
      * @param encabezado
-     * @param cuerpo 
+     * @param cuerpo
      */
     private void parseComando(String encabezado, String[] datos) {
         String sub = this.subject.trim();
         String[] partesSubject = sub.split("\\[");
         encabezado = partesSubject[0];
-         String cuerpo[] = partesSubject[1].split("\\]");
-        
+        String cuerpo[] = partesSubject[1].split("\\]");
+
         if (cuerpo.length != 0) {
             datos = cuerpo[0].split("\\;;");
             for (int i = 0; i < datos.length; i++) {
                 datos[i] = datos[i].trim();
             }
         }
+    }
+
+    @Override
+    public MailSender call() {
+        //String resultadoVerificacion = this.verificarComandos();
+        //System.out.println("Enviar a: " + this.to + ", Query: " + this.subject);
+        
+        // ACA VA LAS CONSULTAS Y EN UN OBJETO MailSender
+        // SE DEVUELVE EL RESULTADO
+        
+        
+        return new MailSender(this.to,"Resultado","Hola");
     }
 }

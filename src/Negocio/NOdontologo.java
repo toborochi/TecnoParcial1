@@ -16,8 +16,6 @@ public class NOdontologo {
 
     public NOdontologo() {
 
-        dato = new DOdontologo();
-        user = new DUsuario();
     }
 
     private String validarDatos() {
