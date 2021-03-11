@@ -3,6 +3,7 @@ package tecnoweb_basic_email;
 import Negocio.NOdontologo;
 import Negocio.NPaciente;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,7 +17,7 @@ public class EmailTask implements Runnable {
     public EmailTask(String to, String subject) {
         this.to = to;
         this.subject = subject;
-        this.nOdontologo = new NOdontologo();
+       this.nPaciente = new NPaciente();
     }
 
     @Override
@@ -41,7 +42,11 @@ public class EmailTask implements Runnable {
     public String verificarComandos() {
         String encabezado = "";
         String datos[] = null;
-        parseComando(encabezado, datos);
+        
+        LinkedList<Object> datosParseados= parseComando(encabezado, datos);
+        
+        encabezado=(String)datosParseados.get(1);
+        datos=(String[])datosParseados.get(0);
          String mensaje="";
         switch (encabezado) {
 
@@ -115,10 +120,11 @@ public class EmailTask implements Runnable {
      * @param encabezado
      * @param cuerpo 
      */
-    private void parseComando(String encabezado, String[] datos) {
-        String sub = this.subject.trim();
+    private LinkedList<Object> parseComando(String encabezado, String[] datos) {
+        LinkedList<Object> parsedList= new LinkedList();
+         String sub = this.subject.trim();
         String[] partesSubject = sub.split("\\[");
-        encabezado = partesSubject[0];
+        encabezado= partesSubject[0];
          String cuerpo[] = partesSubject[1].split("\\]");
         
         if (cuerpo.length != 0) {
@@ -127,5 +133,8 @@ public class EmailTask implements Runnable {
                 datos[i] = datos[i].trim();
             }
         }
+        parsedList.push(encabezado);
+        parsedList.push(datos);
+       return parsedList;
     }
 }

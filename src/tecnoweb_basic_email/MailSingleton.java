@@ -39,7 +39,12 @@ public class MailSingleton {
 
         return e;
     }
-
+    /**
+     * Envia un mail y ejecuta una tarea
+     * @param from
+     * @param to
+     * @throws IOException 
+     */
     public void sendMail(int from, int to) throws IOException {
         System.out.println("Mensajes por responder: " + (to - from + 1));
         pop3.connect();

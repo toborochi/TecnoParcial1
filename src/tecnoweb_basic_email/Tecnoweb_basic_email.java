@@ -57,7 +57,7 @@ public class Tecnoweb_basic_email {
         
         int emails = MailSingleton.getInstance().getEmails(); 
         while(true){
-              npac.validarDatos(new String[]{"123","Juan Perez","20290-12-01","75022"});
+            //  npac.validarDatos(new String[]{"123","Juan Perez","20290-12-01","75022"});
             int emails_query =MailSingleton.getInstance().getEmails();
             
             if(emails_query>emails){
