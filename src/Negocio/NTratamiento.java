@@ -4,15 +4,17 @@
  * and open the template in the editor.
  */
 package Negocio;
-import Datos.DPaciente;
+
+import Datos.DTratamiento;
+
 /**
  *
  * @author cartory
  */
-public class NPaciente extends Negocio {
-    
-    public NPaciente() {
-        super(new DPaciente());
+public class NTratamiento extends Negocio{
+
+    public NTratamiento() {
+        super(new DTratamiento());
     }
     
 }
