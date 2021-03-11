@@ -124,7 +124,8 @@ public class EmailTask implements Callable<MailSender>  {
 
     @Override
     public MailSender call() throws Exception {
-        // TODO: Hola
+        // TODO: Verificar las consultas, salta error cuando se
+        // se llama a Negocio
         String resultadoVerificacion="Saluds";//this.verificarComandos();
         return new MailSender(this.to,"Resultado",resultadoVerificacion);
     }
