@@ -54,8 +54,7 @@ public class MailSingleton {
     public void sendMail(int from, int to) throws IOException, InterruptedException {
         System.out.println("Mensajes por responder: " + (to - from + 1));
 
-        final int MAX_T = 10;
-        ExecutorService pool = Executors.newFixedThreadPool(MAX_T);
+        ExecutorService pool = Executors.newFixedThreadPool(10);
         List<EmailTask> emails = new ArrayList<>();
 
         pop3.connect();

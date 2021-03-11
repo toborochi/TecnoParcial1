@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 
 public class EmailTask implements Callable<MailSender>  {
 
-    SMTP smtp = new SMTP();
+    
     String to, subject;
     NOdontologo nOdontologo;
     NPaciente nPaciente;
@@ -36,10 +36,10 @@ public class EmailTask implements Callable<MailSender>  {
 
             // CU4: Gestionar Abogado
             case "reg_odontologo":
-                this.registrarOdontologo(datos);
+                mensaje = this.registrarOdontologo(datos);
                 break;
             case "crear_paciente":
-                nPaciente.crear(datos);
+                mensaje = nPaciente.crear(datos);
                 break;
             default:
                 mensaje = "La petición '" + this.subject + "' es incorrecta.";
@@ -54,16 +54,15 @@ public class EmailTask implements Callable<MailSender>  {
      *
      * @param datos del odontologo en un vector de strings
      */
-    public void registrarOdontologo(String[] datos) {
+    public String registrarOdontologo(String[] datos) {
+        String respuesta = "";
         try {
-            String respuesta = "";
+            
             if (datos == null) {
-                smtp.sendMail(this.to, "", "no se aceptan datos nulos");
-                return;
+                return "No se aceptan datos nulos";
             }
             if (datos.length < 7 || datos.length > 7) {
-                smtp.sendMail(this.to, "", "Cantidad de parametros incorrecta:" + datos.length);
-                return;
+                return "Cantidad de parametros incorrecta:" + datos.length;
             }
             respuesta += !isInteger(datos[0]) ? "CI no valido \n " : "";
             respuesta += datos[1].length() <= 0 ? "El nombre no es valido \n" : "";
@@ -76,10 +75,11 @@ public class EmailTask implements Callable<MailSender>  {
             if (respuesta.length() == 0) {
                 respuesta = this.nOdontologo.registrarOdontologo(Integer.parseInt(datos[0]), datos[1], datos[2], datos[3], datos[4], datos[5], datos[6]);
             }
-            smtp.sendMail(this.to, "", respuesta);
+            return respuesta;
         } catch (Exception e) {
             System.out.println(e);
         }
+        return respuesta;
     }
 
     /**
@@ -124,15 +124,8 @@ public class EmailTask implements Callable<MailSender>  {
 
     @Override
     public MailSender call() throws Exception {
-        String resultadoVerificacion=this.verificarComandos();
-        try {
-            
-            System.out.println("Enviar a: " + this.to + ", Query: " + this.subject);
-            smtp.sendMail(this.to, "Resultado", resultadoVerificacion);
-           
-        } catch (IOException ex) {
-            Logger.getLogger(EmailTask.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        // TODO: Hola
+        String resultadoVerificacion="Saluds";//this.verificarComandos();
         return new MailSender(this.to,"Resultado",resultadoVerificacion);
     }
 }
