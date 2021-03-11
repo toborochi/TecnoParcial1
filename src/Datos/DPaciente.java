@@ -19,5 +19,12 @@ public class DPaciente extends Dato {
             "fnac",
             "celular"
         };
+        this.TYPES= new String[]{
+            Dato.Datatypes.INTEGER,
+            Dato.Datatypes.STRING,
+            Dato.Datatypes.DATE,
+            Dato.Datatypes.STRING
+        };
+       
     }
 }

@@ -9,6 +9,7 @@ import Datos.*;
 import java.io.IOException;
 import org.rendersnake.HtmlCanvas;
 import static org.rendersnake.HtmlAttributesFactory.*;
+import utils.ParseHelper;
 
 /**
  *
@@ -211,9 +212,10 @@ abstract class Negocio {
     public String TablaHTML(String title) throws IOException {
         Tabla data = this.dato.listar();
         this.html.style().write(styles)._style();
+        
         this.html.html().div(class_("wrapper"));
-        this.html.table(class_(" c-table"));
-
+        this.html.h1().write(title)._h1();
+        this.html.table(class_("c-table"));
         this.html.thead(class_("c-table__header")).tr();
         for (String nombre : data.nombres) {
             this.html.th(class_("c-table__col-label")).write(nombre)._th();
@@ -227,11 +229,93 @@ abstract class Negocio {
             }
             this.html._tr();
         }
-        
+
         this.html._tbody()._table()._div()._html();
 
         String innerHTML = this.html.toHtml();
         this.html = new HtmlCanvas();
         return innerHTML;
+    }
+
+    public String validarDatos(String[] datos) {
+        String mensajeValidacion = "";
+        try {
+
+            String[] columnas = dato.getColums();
+            if (datos.length != columnas.length) {
+                mensajeValidacion = "Cantidad de parametros incorrecta";
+                throw new Exception(mensajeValidacion);
+            }
+            String[] tipos = dato.getTypesList();
+            int i;
+            for (i = 0; i < tipos.length; i++) {
+                String tipo = tipos[i];
+                switch (tipo) {
+                    case Dato.Datatypes.DATE:
+                        if (!validarFecha(datos[i])) {
+                            mensajeValidacion = "Parametro incorrecto en posicion: " + i
+                                    + " : " + columnas[i] + "Verifique que sea una fecha correcta";
+                            throw new Exception(mensajeValidacion);
+                        }
+                        break;
+                    case Dato.Datatypes.FLOAT:
+                        if (!validarFloat(datos[i])) {
+                            mensajeValidacion = "Parametro incorrecto en posicion: " + i
+                                    + " : " + columnas[i] + "Verifique que sea un decimal correcto";
+                            throw new Exception(mensajeValidacion);
+                        }
+                        break;
+                    case Dato.Datatypes.INTEGER:
+                        if (!validarInteger(datos[i])) {
+                            mensajeValidacion = "Parametro incorrecto en posicion: " + i
+                                    + " : " + columnas[i] + "Verifique que sea un numero correcto";
+                            throw new Exception(mensajeValidacion);
+                        }
+                        break;
+                    case Dato.Datatypes.STRING:
+                        if (!validarString(datos[i])) {
+                            mensajeValidacion = "Parametro incorrecto en posicion: " + i
+                                    + " : " + columnas[i] + "Verifique que sea una Cadena correcta";
+                            throw new Exception(mensajeValidacion);
+                        }
+                        break;
+                    case Dato.Datatypes.TIME:
+                        if (!validarFecha(datos[i])) {
+                            mensajeValidacion = "Parametro incorrecto en posicion: " + i
+                                    + " : " + columnas[i] + "Verifique que sea un Tiempo correcto";
+                            throw new Exception(mensajeValidacion);
+                        }
+                        break;
+                }
+
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+        } finally {
+            return mensajeValidacion;
+        }
+
+    }
+
+    private boolean validarFecha(String dato) {
+        if (dato.length() < 10 || dato.length() > 10) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validarFloat(String dato) {
+        return ParseHelper.tryParseFloat(dato);
+    }
+
+    private boolean validarInteger(String dato) {
+        return ParseHelper.tryParseInt(dato);
+    }
+
+    private boolean validarString(String dato) {
+        if (dato.length() == 0) {
+            return false;
+        }
+        return true;
     }
 }
