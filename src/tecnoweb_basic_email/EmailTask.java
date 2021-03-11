@@ -4,10 +4,11 @@ import Negocio.NOdontologo;
 import Negocio.NPaciente;
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class EmailTask implements Runnable {
+public class EmailTask implements Callable<MailSender>  {
 
     SMTP smtp = new SMTP();
     String to, subject;
@@ -20,24 +21,7 @@ public class EmailTask implements Runnable {
        this.nPaciente = new NPaciente();
     }
 
-    @Override
-    public void run() {
-        try {
-            String resultadoVerificacion=this.verificarComandos();
-
-            System.out.println("Enviar a: " + this.to + ", Query: " + this.subject);
-            smtp.connect();
-            smtp.logIn();
-            
-            // Validar Subject
-            // Switch
-            smtp.sendMail(this.to, "Resultado", resultadoVerificacion);
-            smtp.logOut();
-            smtp.close();
-        } catch (IOException ex) {
-            Logger.getLogger(EmailTask.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+    
 
     public String verificarComandos() {
         String encabezado = "";
@@ -136,5 +120,19 @@ public class EmailTask implements Runnable {
         parsedList.push(encabezado);
         parsedList.push(datos);
        return parsedList;
+    }
+
+    @Override
+    public MailSender call() throws Exception {
+        String resultadoVerificacion=this.verificarComandos();
+        try {
+            
+            System.out.println("Enviar a: " + this.to + ", Query: " + this.subject);
+            smtp.sendMail(this.to, "Resultado", resultadoVerificacion);
+           
+        } catch (IOException ex) {
+            Logger.getLogger(EmailTask.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new MailSender(this.to,"Resultado",resultadoVerificacion);
     }
 }
