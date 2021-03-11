@@ -7,6 +7,8 @@ package Negocio;
 
 import Datos.*;
 import java.io.IOException;
+import java.sql.Date;
+import java.sql.Time;
 import org.rendersnake.HtmlCanvas;
 import static org.rendersnake.HtmlAttributesFactory.*;
 import utils.ParseHelper;
@@ -162,20 +164,25 @@ abstract class Negocio {
         this.html = new HtmlCanvas();
     }
 
-    public String crear(Object args[]) {
+    public String crear(String args[]) {
         try {
-            if (dato.crear(args)) {
+            this.validarDatos(args);
+            Object[] datosParseados = this.parsearDatos(args);
+            if (dato.crear(datosParseados)) {
                 return TablaHTML("Registro Completado !");
             }
+                    
         } catch (IOException e) {
             System.err.println(e);
         }
         return "<h1>Ups! Algo Pasó! :(</h1>";
     }
 
-    public String Editar(Object args[]) {
+    public String Editar(String args[]) {
         try {
-            if (dato.crear(args)) {
+            this.validarDatos(args);
+            Object[] datosParseados = this.parsearDatos(args);
+            if (dato.editar(datosParseados)) {
                 return TablaHTML("Registro Completado !");
             }
         } catch (IOException e) {
@@ -212,10 +219,9 @@ abstract class Negocio {
     public String TablaHTML(String title) throws IOException {
         Tabla data = this.dato.listar();
         this.html.style().write(styles)._style();
-        
         this.html.html().div(class_("wrapper"));
-        this.html.h1().write(title)._h1();
-        this.html.table(class_("c-table"));
+        this.html.table(class_(" c-table"));
+
         this.html.thead(class_("c-table__header")).tr();
         for (String nombre : data.nombres) {
             this.html.th(class_("c-table__col-label")).write(nombre)._th();
@@ -312,7 +318,37 @@ abstract class Negocio {
         return ParseHelper.tryParseInt(dato);
     }
 
-    private boolean validarString(String dato) {
+    private Object[] parsearDatos(String[] args) {
+
+        String[] tipos = dato.getTypesList();
+        Object[] datosParseados = new Object[tipos.length];
+
+        for (int i = 0; i < tipos.length; i++) {
+            String tipoActual = tipos[i];
+            switch (tipoActual) {
+                case Dato.Datatypes.INTEGER:
+                    datosParseados[i] = Integer.parseInt(args[i]);
+                    break;
+
+                case Dato.Datatypes.FLOAT:
+                    datosParseados[i] = Float.parseFloat(args[i]);
+                    break;
+                case Dato.Datatypes.DATE:
+                    datosParseados[i] = Date.valueOf(args[i]);
+                    break;
+                case Dato.Datatypes.TIME:
+                    datosParseados[i] = Time.valueOf(args[i]);
+                    break;
+                 case Dato.Datatypes.STRING:
+                    datosParseados[i] =(args[i]);
+                    break;
+            }
+
+        }
+        return datosParseados;
+    }
+
+    boolean validarString(String dato) {
         if (dato.length() == 0) {
             return false;
         }
