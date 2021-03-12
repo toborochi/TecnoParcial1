@@ -20,5 +20,11 @@ public class DReceta extends Dato {
             "fecha",
             "consultaid"
         };
+        this.TYPES= new String[]{
+            Dato.Datatypes.STRING,
+            Dato.Datatypes.STRING,
+            Dato.Datatypes.DATE,
+            Dato.Datatypes.INTEGER
+        };
     }
 }

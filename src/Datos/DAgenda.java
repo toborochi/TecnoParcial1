@@ -17,5 +17,9 @@ public class DAgenda extends Dato {
             "nombre",
             "odontologoid"
         };
+        this.TYPES= new String[]{
+            Dato.Datatypes.STRING,
+            Dato.Datatypes.INTEGER
+        };
     }
 }

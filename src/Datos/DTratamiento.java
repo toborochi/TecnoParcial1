@@ -15,7 +15,11 @@ public class DTratamiento extends Dato {
         this.TABLE = "tratamiento";
         this.COLUMNS = new String[] {
             "nombre",
-            "Especialidadid"
+            "especialidadid"
+        };
+         this.TYPES= new String[]{
+            Dato.Datatypes.STRING,
+            Dato.Datatypes.INTEGER
         };
     }
 }

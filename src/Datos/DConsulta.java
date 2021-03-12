@@ -17,5 +17,9 @@ public class DConsulta extends Dato {
             "fechaemision",
             "citaid"
         };
+        this.TYPES= new String[]{
+            Dato.Datatypes.DATE,
+            Dato.Datatypes.INTEGER
+        };
     }
 }

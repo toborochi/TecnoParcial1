@@ -24,6 +24,10 @@ public class DEspecialidad extends Dato {
         this.COLUMNS = new String[] {
             "odontologoid","especialidadid"
         }; 
+         this.TYPES= new String[]{
+            Dato.Datatypes.INTEGER,
+            Dato.Datatypes.INTEGER
+        };
         }
     }
 }

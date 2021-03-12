@@ -86,7 +86,7 @@ public class MailSingleton {
                     MailSender m = future.get();
                     smtp.sendMail(m.to, m.subject, m.content);
                     smtp.reset();
-                } catch (ExecutionException ex) {
+                } catch (Exception ex) {
                     Logger.getLogger(MailSingleton.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

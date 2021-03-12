@@ -1,8 +1,11 @@
 package tecnoweb_basic_email;
 
+import Negocio.NAgenda;
 import Negocio.NOdontologo;
 import Negocio.NPaciente;
+import Negocio.NUsuario;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.concurrent.Callable;
 import java.util.logging.Level;
@@ -14,21 +17,24 @@ public class EmailTask implements Callable<MailSender>  {
     String to, subject;
     NOdontologo nOdontologo;
     NPaciente nPaciente;
+    NAgenda nAgenda;
+    NUsuario nUsuario;
 
     public EmailTask(String to, String subject) {
-        this.to = to;
-        this.subject = subject;
+       this.to = to;
+       this.subject = subject;
        this.nPaciente = new NPaciente();
+       this.nAgenda =new NAgenda();
+       this.nOdontologo=new NOdontologo();
+       this.nUsuario=new NUsuario();
     }
 
     
-
     public String verificarComandos() {
         String encabezado = "";
         String datos[] = null;
         
         LinkedList<Object> datosParseados= parseComando(encabezado, datos);
-        
         encabezado=(String)datosParseados.get(1);
         datos=(String[])datosParseados.get(0);
          String mensaje="";
@@ -36,15 +42,23 @@ public class EmailTask implements Callable<MailSender>  {
 
             // CU4: Gestionar Abogado
             case "reg_odontologo":
-                mensaje = this.registrarOdontologo(datos);
+               
+                 mensaje += this.nUsuario.crear(Arrays.copyOfRange(datos,5,7));
+                 String[] odontologo=Arrays.copyOfRange(datos,0,6);
+                 odontologo[5]=this.nUsuario.getID(new String[]{"correo","contraseña"}, new String[]{datos[5],datos[6]});
+                 mensaje = this.nOdontologo.crear(odontologo);
                 break;
             case "crear_paciente":
-                mensaje = nPaciente.crear(datos);
-                break;
+                mensaje = this.nPaciente.crear(datos);
+            break;
+            case "crear_agenda":
+                
+            break;
             default:
                 mensaje = "La petición '" + this.subject + "' es incorrecta.";
 
                 break;
+             
         }
         return mensaje;
     }
@@ -73,7 +87,7 @@ public class EmailTask implements Callable<MailSender>  {
             respuesta += datos[6].length() < 8 ? "Contraseña de longitud no valida \n" : "";
 
             if (respuesta.length() == 0) {
-                respuesta = this.nOdontologo.registrarOdontologo(Integer.parseInt(datos[0]), datos[1], datos[2], datos[3], datos[4], datos[5], datos[6]);
+               // respuesta = this.nOdontologo.registrarOdontologo(Integer.parseInt(datos[0]), datos[1], datos[2], datos[3], datos[4], datos[5], datos[6]);
             }
             return respuesta;
         } catch (Exception e) {
@@ -126,7 +140,8 @@ public class EmailTask implements Callable<MailSender>  {
     public MailSender call() throws Exception {
         // TODO: Verificar las consultas, salta error cuando se
         // se llama a Negocio
-        String resultadoVerificacion="Saluds";//this.verificarComandos();
+       
+        String resultadoVerificacion=this.verificarComandos();
         return new MailSender(this.to,"Resultado",resultadoVerificacion);
     }
 }
