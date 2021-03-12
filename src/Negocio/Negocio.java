@@ -155,7 +155,7 @@ abstract class Negocio {
             + "    background-color: rgba(113, 110, 182, 0.04); \n"
             + "  }\n"
             + "  \n"
-            ;
+            + "}";
 
     Dato dato;
     protected HtmlCanvas html;
