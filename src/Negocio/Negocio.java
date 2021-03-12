@@ -19,7 +19,8 @@ import utils.ParseHelper;
  */
 abstract class Negocio {
 
-    private final String styles = "body {\n"
+    private final String styles =
+            "body {\n"
             + "  background-color: #f3f3f3;\n"
             + "  font-family: Futura, sans-serif;\n"
             + "}\n"
@@ -154,7 +155,7 @@ abstract class Negocio {
             + "    background-color: rgba(113, 110, 182, 0.04); \n"
             + "  }\n"
             + "  \n"
-            + "}";
+            ;
 
     Dato dato;
     protected HtmlCanvas html;
@@ -166,6 +167,7 @@ abstract class Negocio {
 
     public String crear(String args[]) {
         try {
+            
             this.validarDatos(args);
             Object[] datosParseados = this.parsearDatos(args);
             if (dato.crear(datosParseados)) {
@@ -238,6 +240,7 @@ abstract class Negocio {
 
     public String TablaHTML(String title) throws IOException {
         Tabla data = this.dato.listar();
+       
         this.html.style().write(styles)._style();
         this.html.html().div(class_("wrapper"));
         this.html.table(class_(" c-table"));
@@ -259,6 +262,7 @@ abstract class Negocio {
         this.html._tbody()._table()._div()._html();
 
         String innerHTML = this.html.toHtml();
+        innerHTML= "Content-Type: text/html; charset=\"UTF-8\"\n" +innerHTML;
         this.html = new HtmlCanvas();
         return innerHTML;
     }
