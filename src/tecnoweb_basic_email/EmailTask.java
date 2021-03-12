@@ -156,7 +156,9 @@ public class EmailTask implements Callable<MailSender> {
             case "eliminar_tratamiento":
                 mensaje = nTratamiento.Eliminar(datos[0]);
                 break;
-
+            case "help":
+                mensaje=this.help();
+                break;
             case "reporteGeneros":
                 mensaje = "<img \n"
                         + "     style=\"-webkit-user-select: none; display: block; margin: auto; padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); cursor: zoom-in;\"\n"
