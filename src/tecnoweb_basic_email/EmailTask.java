@@ -129,7 +129,7 @@ public class EmailTask implements Callable<MailSender> {
             case "listar_pacientes":
                 mensaje = nPaciente.TablaHTML("Lista Pacientes");
                 break;
-            case "mod_pacientes":
+            case "mod_paciente":
                 mensaje = nPaciente.Editar(datos);
                 break;
             case "eliminar_paciente":
