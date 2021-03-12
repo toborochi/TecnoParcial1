@@ -47,7 +47,7 @@ public class EmailTask implements Callable<MailSender> {
     public String verificarComandos() throws IOException {
         String encabezado = "";
         String datos[] = null;
-
+        
         LinkedList<Object> datosParseados = parseComando(encabezado, datos);
         encabezado = (String) datosParseados.get(1);
         datos = (String[]) datosParseados.get(0);
@@ -55,30 +55,30 @@ public class EmailTask implements Callable<MailSender> {
         switch (encabezado) {
 
             // CU4: Gestionar Abogado
-            case "crear_agenda":
+            case "reg_agenda":
                 mensaje = nAgenda.crear(datos);
                 break;
-            case "listar_agenda":
+            case "list_agenda":
                 mensaje = nAgenda.TablaHTML("Lista");
-            case "editar_agenda":
+            case "mod_agenda":
                 mensaje = nAgenda.Editar(datos);
                 break;
             case "eliminar_agenda":
                 mensaje = nAgenda.Eliminar(datos[0]);
                 break;
-            case "crear_cita":
+            case "reg_cita":
                 mensaje = nCita.crear(datos);
                 break;
             case "eliminar_cita":
                 mensaje = nCita.Eliminar(datos[0]);
                 break;
-            case "crear_consulta":
+            case "reg_consulta":
                 mensaje = nConsulta.crear(datos);
                 break;
-            case "eliminar_consulta":
+            case "mod_consulta":
                 mensaje = nConsulta.Eliminar(datos[0]);
                 break;
-            case "crear_especialidad":
+            case "reg_especialidad":
                 mensaje = nEspecialidad.crear(datos);
                 break;
             case "eliminar_especialidad":
@@ -94,25 +94,39 @@ public class EmailTask implements Callable<MailSender> {
             case "eliminar_odontologo":
                 mensaje = nOdontologo.Eliminar(datos[0]);
                 break;
-            case "crear_paciente":
+            case "reg_paciente":
                 mensaje = this.nPaciente.crear(datos);
                 break;
             case "eliminar_paciente":
                 mensaje = nPaciente.Eliminar(datos[0]);
                 break;
-            case "crear_receta":
+            case "reg_receta":
                 mensaje = nReceta.crear(datos);
                 break;
             case "eliminar_receta":
                 mensaje = nReceta.Eliminar(datos[0]);
                 break;
-            case "crear_tratamiento":
+            case "reg_tratamiento":
                 mensaje = nTratamiento.crear(datos);
                 break;
             case "eliminar_tratamiento":
                 mensaje = nTratamiento.Eliminar(datos[0]);
                 break;
-
+            
+            case "reporteGeneros":
+                mensaje = "<img \n" +
+"     style=\"-webkit-user-select: none; display: block; margin: auto; padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); cursor: zoom-in;\"\n" +
+"     src=\"https://quickchart.io/chart?bkg=white&amp;c={\n" +
+"          type:%27pie%27,\n" +
+"          data:{\n" +
+"          labels:['hombres', 'mujeres'],\n" +
+"          datasets:[{\n" +
+"            label:%27Odóntologos%27,data:[120,60]\n" +
+"              }]}\n" +
+"          }\" \n" +
+"      width=\"623\" \n" +
+"     height=\"373\">";
+                break;
             default:
                 mensaje = "La petición '" + this.subject + "' es incorrecta.";
 
@@ -249,17 +263,19 @@ public class EmailTask implements Callable<MailSender> {
                     {"CU6 Gestionar Especialidad", "Listar Especialidad",       "list_especialidad[];"},
                     {"CU6 Gestionar Especialidad", "Encontrar Especialidad",    "list_especialidad[int id];"},
                     // CU7 GESTIONAR AGENDA
-                    {"CU6 Gestionar Agenda", "Registrar Agenda",    "reg_agenda[String nombre;; int Odontologid];"},
-                    {"CU6 Gestionar Agenda", "Registrar Agenda",    "mod_agenda[String nombre;; int Odontologid]; int id;"},
-                    {"CU6 Gestionar Agenda", "Eliminar Agenda",     "eliminar_agenda[int id];"},
-                    {"CU6 Gestionar Agenda", "Listar Agenda",       "list_agenda[];"},
-                    {"CU6 Gestionar Agenda", "Encontrar Agenda",    "list_agenda[int id];"},
+                    {"CU7 Gestionar Agenda", "Registrar Agenda",    "reg_agenda[String nombre;; int Odontologid];"},
+                    {"CU7 Gestionar Agenda", "Registrar Agenda",    "mod_agenda[String nombre;; int Odontologid]; int id;"},
+                    {"CU7 Gestionar Agenda", "Eliminar Agenda",     "eliminar_agenda[int id];"},
+                    {"CU7 Gestionar Agenda", "Listar Agenda",       "list_agenda[];"},
+                    {"CU7 Gestionar Agenda", "Encontrar Agenda",    "list_agenda[int id];"},
                     // CU8 GESTIONAR CONSULTA
-                    {"CU6 Gestionar Consulta", "Registrar Consulta",    "reg_consulta[Date fechaEmision[AAAA-MM-DD];; int Citaid];"},
-                    {"CU6 Gestionar Consulta", "Registrar Consulta",    "mod_consulta[Date fechaEmision[AAAA-MM-DD];; int Citaid]; int id;"},
-                    {"CU6 Gestionar Consulta", "Eliminar Consulta",     "eliminar_consulta[int id];"},
-                    {"CU6 Gestionar Consulta", "Listar Consulta",       "list_consulta[];"},
-                    {"CU6 Gestionar Consulta", "Encontrar Consulta",    "list_consulta[int id];"},
+                    {"CU8 Gestionar Consulta", "Registrar Consulta",    "reg_consulta[Date fechaEmision[AAAA-MM-DD];; int Citaid];"},
+                    {"CU8 Gestionar Consulta", "Registrar Consulta",    "mod_consulta[Date fechaEmision[AAAA-MM-DD];; int Citaid]; int id;"},
+                    {"CU8 Gestionar Consulta", "Eliminar Consulta",     "eliminar_consulta[int id];"},
+                    {"CU8 Gestionar Consulta", "Listar Consulta",       "list_consulta[];"},
+                    {"CU8 Gestionar Consulta", "Encontrar Consulta",    "list_consulta[int id];"},
+                    //  CU9 GENERAR REPORTE
+                    {"CU9 VER REPORTE", "Ver Odontologos", "reporteGeneros[];"},
         };
 
         String help = "Content-Type: text/html; charset=\"UTF-8\"\n"
