@@ -16,6 +16,9 @@ public class DEspecialidad extends Dato {
         this.COLUMNS = new String[] {
             "nombre"
         };
+         this.TYPES= new String[]{
+            Dato.Datatypes.STRING
+        };
     }
     public class DOdontologoEspecialidad extends Dato{
         public DOdontologoEspecialidad(){

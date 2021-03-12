@@ -6,6 +6,7 @@
 package utils;
 
 import java.sql.Date;
+import java.sql.Time;
 
 /**
  *
@@ -18,6 +19,15 @@ public class ParseHelper {
             Integer.parseInt(value);
             return true;
         } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    public static boolean tryParseTime(String value) {
+        try {
+            Time.valueOf(value);
+            return true;
+        } catch (Exception e) {
             return false;
         }
     }

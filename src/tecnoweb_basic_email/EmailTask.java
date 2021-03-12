@@ -1,8 +1,13 @@
 package tecnoweb_basic_email;
 
 import Negocio.NAgenda;
+import Negocio.NCita;
+import Negocio.NConsulta;
+import Negocio.NEspecialidad;
 import Negocio.NOdontologo;
 import Negocio.NPaciente;
+import Negocio.NReceta;
+import Negocio.NTratamiento;
 import Negocio.NUsuario;
 import java.io.IOException;
 import java.util.Arrays;
@@ -15,17 +20,30 @@ public class EmailTask implements Callable<MailSender>  {
 
     
     String to, subject;
+    
+    NAgenda nAgenda;
+    NCita nCita;
+    NConsulta nConsulta;
+    NEspecialidad nEspecialidad;
     NOdontologo nOdontologo;
     NPaciente nPaciente;
-    NAgenda nAgenda;
+    NReceta nReceta;
+    NTratamiento nTratamiento;
     NUsuario nUsuario;
+    
+    
 
     public EmailTask(String to, String subject) {
        this.to = to;
        this.subject = subject;
-       this.nPaciente = new NPaciente();
        this.nAgenda =new NAgenda();
+       this.nCita=new NCita();
+       this.nConsulta=new NConsulta();
+       this.nEspecialidad=new NEspecialidad();
        this.nOdontologo=new NOdontologo();
+       this.nPaciente = new NPaciente();
+       this.nReceta=new NReceta();
+       this.nTratamiento=new NTratamiento();
        this.nUsuario=new NUsuario();
     }
 
@@ -41,19 +59,38 @@ public class EmailTask implements Callable<MailSender>  {
         switch (encabezado) {
 
             // CU4: Gestionar Abogado
-            case "reg_odontologo":
-               
-                 mensaje += this.nUsuario.crear(Arrays.copyOfRange(datos,5,7));
+            case "crear_agenda":
+                mensaje=nAgenda.crear(datos);
+            break;
+           
+            
+            case "crear_cita":
+                mensaje=nCita.crear(datos);
+            break;
+            case "crear_consulta":
+                mensaje=nConsulta.crear(datos);
+            break;
+            case "crear_especialidad":
+                mensaje=nEspecialidad.crear(datos);
+            break;
+            
+            case "reg_odontologo":  
+                 mensaje+= this.nUsuario.crear(Arrays.copyOfRange(datos,5,7));
                  String[] odontologo=Arrays.copyOfRange(datos,0,6);
                  odontologo[5]=this.nUsuario.getID(new String[]{"correo","contraseña"}, new String[]{datos[5],datos[6]});
-                 mensaje = this.nOdontologo.crear(odontologo);
+                 mensaje= this.nOdontologo.crear(odontologo);
                 break;
             case "crear_paciente":
                 mensaje = this.nPaciente.crear(datos);
             break;
-            case "crear_agenda":
-                
+            case "crear_receta":
+                mensaje=nReceta.crear(datos);
             break;
+            case "crear_tratamiento":
+                mensaje=nTratamiento.crear(datos);
+            break;
+           
+            
             default:
                 mensaje = "La petición '" + this.subject + "' es incorrecta.";
 

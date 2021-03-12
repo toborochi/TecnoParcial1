@@ -310,7 +310,7 @@ abstract class Negocio {
                         }
                         break;
                     case Dato.Datatypes.TIME:
-                        if (!validarFecha(datos[i])) {
+                        if (!validarTiempo(datos[i]+":00")) {
                             mensajeValidacion = "Parametro incorrecto en posicion: " + i
                                     + " : " + columnas[i] + "Verifique que sea un Tiempo correcto";
                             throw new Exception(mensajeValidacion);
@@ -333,7 +333,9 @@ abstract class Negocio {
         }
         return true;
     }
-
+    private boolean validarTiempo(String dato) {
+        return ParseHelper.tryParseTime(dato);
+    }
     private boolean validarFloat(String dato) {
         return ParseHelper.tryParseFloat(dato);
     }
@@ -361,7 +363,8 @@ abstract class Negocio {
                     datosParseados[i] = Date.valueOf(args[i]);
                     break;
                 case Dato.Datatypes.TIME:
-                    datosParseados[i] = Time.valueOf(args[i]);
+                    
+                    datosParseados[i] = Time.valueOf(args[i]+":00");
                     break;
                  case Dato.Datatypes.STRING:
                     datosParseados[i] =(args[i]);
