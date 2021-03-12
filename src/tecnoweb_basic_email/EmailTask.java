@@ -10,7 +10,9 @@ import Negocio.NReceta;
 import Negocio.NTratamiento;
 import Negocio.NUsuario;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.concurrent.Callable;
 import java.util.logging.Level;
@@ -326,9 +328,14 @@ public class EmailTask implements Callable<MailSender> {
                     //  CU9 GENERAR REPORTE
                     {"CU9 VER REPORTE", "Ver Odontologos", "reporteGeneros[];"},};
 
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        
+        
         String help = "Content-Type: text/html; charset=\"UTF-8\"\n"
                 + "\n"
                 + "<h1>Lista de Comandos  </h1>"
+                + formatter.format(date)
                 // + "<h2>Por favor no utilizar tildes (´) o (ñ) en los datos de los comandos</h2>"
                 // + "<h2>(Se acepta documentos tipo: .txt, .docx, .pdf, .jpg, .rar, .xmls) DEPENDIENTO DEL TAMAÑO DEL ARCHIVO EL TIEMPO DE EJECUCION DEL PROGRAMA SERÁ MAYOR</h2>"
                 + "<table style=\"border-collapse: collapse; width: 100%; border: 2px solid black;\">\n"
