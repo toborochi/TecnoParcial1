@@ -59,7 +59,7 @@ public class EmailTask implements Callable<MailSender> {
             case "reg_agenda":
                 mensaje = nAgenda.crear(datos);
                 break;
-            case "list_agenda":
+            case "listar_agendas":
                 mensaje = nAgenda.TablaHTML("Lista Agenda");
             case "mod_agenda":
                 mensaje = nAgenda.Editar(datos);
@@ -67,7 +67,7 @@ public class EmailTask implements Callable<MailSender> {
             case "eliminar_agenda":
                 mensaje = nAgenda.Eliminar(datos[0]);
                 break;
-            case "reg_cita":
+            case "reserva_cita":
                 mensaje = nCita.crear(datos);
                 break;
             case "listar_citas":
@@ -136,7 +136,7 @@ public class EmailTask implements Callable<MailSender> {
             case "reg_receta":
                 mensaje = nReceta.crear(datos);
                 break;
-            case "listar_receta":
+            case "listar_recetas":
                 mensaje = nReceta.TablaHTML("Lista Recetas");
                 break;
             case "mod_receta":
@@ -277,52 +277,44 @@ public class EmailTask implements Callable<MailSender> {
                     {"Caso de uso", "Método", "Comando"},
                     // CU1 GESTIONAR PACIENTE
                     {"CU1. Gestionar paciente", "Registrar Paciente", "reg_paciente[int ci;;String nombre;;Date fNac[AAAA-MM-DD];;String celular];"},
-                    {"CU1. Gestionar paciente", "Modificar Paciente", "mod_paciente[int ci;;String nombre;;Date fNac[AAAA-MM-DD];;String celular];"},
+                    {"CU1. Gestionar paciente", "Modificar Paciente", "mod_paciente[int id;;int ci;;String nombre;;Date fNac[AAAA-MM-DD];;String celular];"},
                     {"CU1. Gestionar paciente", "EliminarPaciente", "eliminar_paciente[int id];"},
                     {"CU1. Gestionar paciente", "Listar Paciente", "listar_pacientes[];"},
-                    {"CU1. Gestionar paciente", "Encontrar Paciente", "list_paciente[int ci];"},
                     //  CU2 GESTIONAR ODONTÓLOGO
-                    {"CU2. Gestionar odontologo", "Registrar Odontologo", "reg_odontologo[int CI;; String nombre;;Date fNac[AAAA-MM-DD];;String celular ;;String Genero [M o F] ;; String Correo ;; String Contraseñ];"},
-                    {"CU2. Gestionar odontologo", "Modificar  Odontologo", "mod_odontologo[int ci ;; String nombre ;; int celular  ;; String fecha de nacimiento(AAAA-MM-DD)] ;; String genero;"},
+                    {"CU2. Gestionar odontologo", "Registrar Odontologo", "reg_odontologo[int CI;; String nombre;;Date fNac[AAAA-MM-DD];;String celular ;;String Genero (M o F) ;; String Correo ;; String Contrasena];"},
+                    {"CU2. Gestionar odontologo", "Modificar  Odontologo", "mod_odontologo[int id;;  String nombre ;; int celular  ;; String fecha de nacimiento(AAAA-MM-DD) ;; String genero];"},
                     {"CU2. Gestionar odontologo", "Eliminar  Odontologo", "eliminar_odontologo[int id];"},
-                    {"CU2. Gestionar odontologo", "Listar  Odontologos", "listar_odontologo[];"},
-                    {"CU2. Gestionar odontologo", "Encontrar  Odontologos", "find_odontologo[int ci];"},
+                    {"CU2. Gestionar odontologo", "Listar  Odontologos", "listar_odontologos[];"},
                     //  CU3 GESTIONAR RECETA
                     {"CU3 Gestionar Receta", "Registrar Receta", "reg_receta[String titulo;;String descripcion;;Date fNac[AAAA-MM-DD];;int Consultaid];"},
-                    {"CU3 Gestionar Receta", "Registrar Receta", "mod_receta[String titulo;;String descripcion;;Date fNac[AAAA-MM-DD];;int Consultaid];; int id;"},
+                    {"CU3 Gestionar Receta", "Registrar Receta", "mod_receta[int id;;String titulo;;String descripcion;;Date fNac[AAAA-MM-DD];;int Consultaid];"},
                     {"CU3 Gestionar Receta", "Eliminar Receta", "eliminar_paciente[int id];"},
-                    {"CU3 Gestionar Receta", "Listar Receta", "listar_paciente[];"},
-                    {"CU3 Gestionar Receta", "Encontrar Receta", "list_paciente[int id];"},
+                    {"CU3 Gestionar Receta", "Listar Receta", "listar_pacientes[];"},
                     //  CU4 GESTIONAR CITA
-                    {"CU4 Gestionar Cita", "Registrar Cita", "reg_cita[Date horaInicio[AAAA-MM-DD];;;;Date horaFin[AAAA-MM-DD];;int Pacienteid;; int Agendaid];"},
-                    {"CU4 Gestionar Cita", "Registrar Cita", "mod_cita[Date horaInicio[AAAA-MM-DD];;;;Date horaFin[AAAA-MM-DD];;int Pacienteid;; int Agendaid];; int id;"},
+                    {"CU4 Gestionar Cita", "Registrar Cita", "reserva_cita[Time horaInicio[HH-MM];;Time horaFin[HH-MM];;int Pacienteid;; int Agendaid];"},
+                    {"CU4 Gestionar Cita", "Registrar Cita", "mod_cita[int id;;Time horaInicio[HH-MM];;Time horaFin[HH-MM];;int Pacienteid;; int Agendaid];"},
                     {"CU4 Gestionar Cita", "Eliminar Cita", "eliminar_cita[int id];"},
-                    {"CU4 Gestionar Cita", "Listar Cita", "listar_cita[];"},
-                    {"CU4 Gestionar Cita", "Encontrar Cita", "list_cita[int id];"},
+                    {"CU4 Gestionar Cita", "Listar Cita", "listar_citas[];"},
                     //  CU5 GESTIONAR TRATAMIENTO
                     {"CU5 Gestionar Tratamiento", "Registrar Tratamiento", "reg_tratamiento[String nombre;; int Especialidadid];"},
-                    {"CU5 Gestionar Tratamiento", "Registrar Tratamiento", "mod_tratamiento[String nombre;; int Especialidadid];; int id;"},
+                    {"CU5 Gestionar Tratamiento", "Registrar Tratamiento", "mod_tratamiento[int id;;String nombre;; int Especialidadid];"},
                     {"CU5 Gestionar Tratamiento", "Eliminar Tratamiento", "eliminar_tratamiento[int id];"},
-                    {"CU5 Gestionar Tratamiento", "Listar Tratamiento", "listar_tratamiento[];"},
-                    {"CU5 Gestionar Tratamiento", "Encontrar Tratamiento", "list_cita[int id];"},
+                    {"CU5 Gestionar Tratamiento", "Listar Tratamiento", "listar_tratamientos[];"},
                     // CU6 GESTIONAR ESPECIALIDAD
                     {"CU6 Gestionar Especialidad", "Registrar Especialidad", "reg_especialidad[String nombre];"},
-                    {"CU6 Gestionar Especialidad", "Registrar Especialidad", "mod_especialidad[String nombre]; int id;"},
+                    {"CU6 Gestionar Especialidad", "Registrar Especialidad", "mod_especialidad[int id;;String nombre];"},
                     {"CU6 Gestionar Especialidad", "Eliminar Especialidad", "eliminar_especialidad[int id];"},
-                    {"CU6 Gestionar Especialidad", "Listar Especialidad", "listar_especialidad[];"},
-                    {"CU6 Gestionar Especialidad", "Encontrar Especialidad", "list_especialidad[int id];"},
+                    {"CU6 Gestionar Especialidad", "Listar Especialidad", "listar_especialidades[];"},
                     // CU7 GESTIONAR AGENDA
                     {"CU7 Gestionar Agenda", "Registrar Agenda", "reg_agenda[String nombre;; int Odontologid];"},
-                    {"CU7 Gestionar Agenda", "Registrar Agenda", "mod_agenda[String nombre;; int Odontologid]; int id;"},
+                    {"CU7 Gestionar Agenda", "Registrar Agenda", "mod_agenda[int id;;String nombre;; int Odontologid];"},
                     {"CU7 Gestionar Agenda", "Eliminar Agenda", "eliminar_agenda[int id];"},
-                    {"CU7 Gestionar Agenda", "Listar Agenda", "listar_agenda[];"},
-                    {"CU7 Gestionar Agenda", "Encontrar Agenda", "list_agenda[int id];"},
+                    {"CU7 Gestionar Agenda", "Listar Agenda", "listar_agendas[];"},
                     // CU8 GESTIONAR CONSULTA
                     {"CU8 Gestionar Consulta", "Registrar Consulta", "reg_consulta[Date fechaEmision[AAAA-MM-DD];; int Citaid];"},
-                    {"CU8 Gestionar Consulta", "Registrar Consulta", "mod_consulta[Date fechaEmision[AAAA-MM-DD];; int Citaid]; int id;"},
+                    {"CU8 Gestionar Consulta", "Registrar Consulta", "mod_consulta[int id;;Date fechaEmision[AAAA-MM-DD];; int Citaid];"},
                     {"CU8 Gestionar Consulta", "Eliminar Consulta", "eliminar_consulta[int id];"},
-                    {"CU8 Gestionar Consulta", "Listar Consulta", "listar_consulta[];"},
-                    {"CU8 Gestionar Consulta", "Encontrar Consulta", "list_consulta[int id];"},
+                    {"CU8 Gestionar Consulta", "Listar Consulta", "listar_consultas[];"},
                     //  CU9 GENERAR REPORTE
                     {"CU9 VER REPORTE", "Ver Odontologos", "reporteGeneros[];"},};
 
