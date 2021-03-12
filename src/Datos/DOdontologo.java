@@ -29,5 +29,11 @@ public class DOdontologo extends Dato {
             Dato.Datatypes.INTEGER
         };
        
-    }  
+    }
+    public Tabla getReporteGenero() {
+       
+          String sql = "Select COUNT(odontologo.genero) from odontologo GROUP by odontologo.genero";
+        return new Tabla((ResultSet) dbc.query(sql));
+       
+    }
 }

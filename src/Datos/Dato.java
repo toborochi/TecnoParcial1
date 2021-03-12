@@ -8,7 +8,7 @@ public class Dato {
     protected String TABLE;
     protected String[] COLUMNS;
     protected String[] TYPES;
-    private final DConexion dbc;
+    protected final DConexion dbc;
 
     public Dato() {
         this.dbc = new DConexion();
@@ -109,7 +109,7 @@ public class Dato {
 
         return (boolean) dbc.query(sql);
     }
-
+        
     public boolean eliminar(String id) {
         String sql = String.format("DELETE FROM " + TABLE + " WHERE id = %s", id);
         return (boolean) dbc.query(sql);
