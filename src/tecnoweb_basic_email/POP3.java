@@ -132,15 +132,15 @@ public class POP3 {
         boolean found = false;
         for (int i = 0; i < lines.length; ++i) {
             line = lines[i];
-            if (line.contains("From:")) {
+            if (line.contains("Return-Path:")) {
                 found = true;
                 break;
             }
         }
         
         if(found){
-            String[] currencies = line.split(" ");
-            String email = currencies[2];
+            String[] currencies = line.split(":");
+            String email = currencies[1];
             email = email.replace('<', ' ');
             email = email.replace('>', ' ');
             email = email.trim();
