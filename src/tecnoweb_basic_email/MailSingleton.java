@@ -1,8 +1,14 @@
 package tecnoweb_basic_email;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MailSingleton {
 
@@ -45,23 +51,47 @@ public class MailSingleton {
      * @param to
      * @throws IOException 
      */
-    public void sendMail(int from, int to) throws IOException {
+    public void sendMail(int from, int to) throws IOException, InterruptedException {
         System.out.println("Mensajes por responder: " + (to - from + 1));
+
+        ExecutorService pool = Executors.newFixedThreadPool(10);
+        List<EmailTask> emails = new ArrayList<>();
+
         pop3.connect();
         pop3.logIn();
         for (int i = to; i <= from; ++i) {
-            System.out.println("Respondiendo a " + i);
 
             String mensaje = pop3.getMail(Integer.toString(i));
-            System.out.println("Mensaje" + mensaje);
             String emisor = pop3.getFrom(mensaje);
             String subject = pop3.getSubject(mensaje);
 
-            Runnable task = new EmailTask(emisor, subject);
-            pool.execute(task);
+            System.out.println(emisor);
+            System.out.println(subject);
 
+            emails.add(new EmailTask(emisor, subject));
         }
         pop3.logOut();
         pop3.close();
+
+        List<Future<MailSender>> pending;
+        pending = pool.invokeAll(emails);
+        pool.shutdownNow();
+        smtp.connect();
+        smtp.logIn();
+        for (int i = 0; i < pending.size(); ++i) {
+
+            Future<MailSender> future = pending.get(i);
+            if (future.isDone()) {
+                try {
+                    MailSender m = future.get();
+                    smtp.sendMail(m.to, m.subject, m.content);
+                    smtp.reset();
+                } catch (ExecutionException ex) {
+                    Logger.getLogger(MailSingleton.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        smtp.logOut();
+        smtp.close();
     }
 }
