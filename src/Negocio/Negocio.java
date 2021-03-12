@@ -9,6 +9,7 @@ import Datos.*;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.Time;
+import java.util.Arrays;
 import org.rendersnake.HtmlCanvas;
 import static org.rendersnake.HtmlAttributesFactory.*;
 import utils.ParseHelper;
@@ -182,9 +183,16 @@ abstract class Negocio {
 
     public String Editar(String args[]) {
         try {
-            this.validarDatos(args);
-            Object[] datosParseados = this.parsearDatos(args);
-            if (dato.editar(datosParseados)) {
+            Object[] datosTotales=new Object[args.length];
+            Integer id=Integer.parseInt(args[0]);
+            datosTotales[args.length-1]=id;
+            this.validarDatos(Arrays.copyOfRange(args, 1, args.length));
+            Object[] datosParseados = this.parsearDatos(Arrays.copyOfRange(args, 1, args.length));
+            for (int i = 0; i < datosParseados.length; i++) {
+                Object datoParseado = datosParseados[i];
+                datosTotales[i]=datoParseado;
+            }
+            if (dato.editar(datosTotales)) {
                 return TablaHTML("Registro Completado !");
             }
         } catch (IOException e) {

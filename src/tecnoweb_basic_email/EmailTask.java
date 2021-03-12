@@ -58,9 +58,10 @@ public class EmailTask implements Callable<MailSender> {
             case "crear_agenda":
                 mensaje = nAgenda.crear(datos);
                 break;
-            case "listar_agenda":
+            case "listar_agendas":
                 mensaje = nAgenda.TablaHTML("Lista");
-            case "editar_agenda":
+                 break;
+            case "mod_agenda":
                 mensaje = nAgenda.Editar(datos);
                 break;
             case "eliminar_agenda":
@@ -69,6 +70,9 @@ public class EmailTask implements Callable<MailSender> {
             case "crear_cita":
                 mensaje = nCita.crear(datos);
                 break;
+             case "listar_citas":
+                mensaje = nCita.TablaHTML("Lista");
+                 break;
             case "eliminar_cita":
                 mensaje = nCita.Eliminar(datos[0]);
                 break;
@@ -78,12 +82,18 @@ public class EmailTask implements Callable<MailSender> {
             case "eliminar_consulta":
                 mensaje = nConsulta.Eliminar(datos[0]);
                 break;
+            case "listar_consultas":
+                mensaje = nConsulta.TablaHTML("Lista");
+                break;
             case "crear_especialidad":
                 mensaje = nEspecialidad.crear(datos);
                 break;
             case "eliminar_especialidad":
                 mensaje = nEspecialidad.Eliminar(datos[0]);
                 break;
+            case "listar_especialidades":
+                mensaje = nEspecialidad.TablaHTML("Lista");
+                 break;
 
             case "reg_odontologo":
                 mensaje += this.nUsuario.crear(Arrays.copyOfRange(datos, 5, 7));
@@ -93,6 +103,9 @@ public class EmailTask implements Callable<MailSender> {
                 break;
             case "eliminar_odontologo":
                 mensaje = nOdontologo.Eliminar(datos[0]);
+                break;
+            case "listar_odontologos":
+                mensaje = nOdontologo.TablaHTML("Lista");
                 break;
             case "crear_paciente":
                 mensaje = this.nPaciente.crear(datos);
@@ -106,16 +119,20 @@ public class EmailTask implements Callable<MailSender> {
             case "eliminar_receta":
                 mensaje = nReceta.Eliminar(datos[0]);
                 break;
+            case "listar_recetas":
+                mensaje = nReceta.TablaHTML("Lista");
+                break;
             case "crear_tratamiento":
                 mensaje = nTratamiento.crear(datos);
                 break;
             case "eliminar_tratamiento":
                 mensaje = nTratamiento.Eliminar(datos[0]);
                 break;
-
+            case "listar_tratamientos":
+            mensaje = nReceta.TablaHTML("Lista");
+            break;
             default:
                 mensaje = "La petición '" + this.subject + "' es incorrecta.";
-
                 break;
 
         }
