@@ -169,7 +169,10 @@ abstract class Negocio {
     public String crear(String args[]) {
         try {
             
-            this.validarDatos(args);
+            String mensajeValidacion=this.validarDatos(args);
+            if(mensajeValidacion.length()>1){
+                return mensajeValidacion;
+            }
             Object[] datosParseados = this.parsearDatos(args);
             if (dato.crear(datosParseados)) {
                 return TablaHTML("Registro Completado !");
@@ -177,6 +180,7 @@ abstract class Negocio {
                     
         } catch (IOException e) {
             System.err.println(e);
+            
         }
         return "<h1>Ups! Algo Pasó! :(</h1>";
     }
@@ -186,7 +190,12 @@ abstract class Negocio {
             Object[] datosTotales=new Object[args.length];
             Integer id=Integer.parseInt(args[0]);
             datosTotales[args.length-1]=id;
-            this.validarDatos(Arrays.copyOfRange(args, 1, args.length));
+            
+            String mensajeValidacion= this.validarDatos(Arrays.copyOfRange(args, 1, args.length));
+            if(mensajeValidacion.length()>1){
+                return mensajeValidacion;
+            }
+           
             Object[] datosParseados = this.parsearDatos(Arrays.copyOfRange(args, 1, args.length));
             for (int i = 0; i < datosParseados.length; i++) {
                 Object datoParseado = datosParseados[i];
