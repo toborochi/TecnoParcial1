@@ -12,17 +12,18 @@ import java.sql.Date;
 public class NOdontologo extends Negocio {
 
     public final String NOMBRE_TABLA = "odontologo";
-    private DOdontologo dato;
+    private DOdontologo dato = new DOdontologo();
     private DUsuario user;
 
     public NOdontologo() {
         super(new DOdontologo());
+        
     }
 
     public String getReporteGenero() {
         Tabla miTable=dato.getReporteGenero();
-        String m=miTable.getData(0, 1);
-        String f=miTable.getData(1, 1);
+        String m=miTable.getData(0, 0);
+        String f=miTable.getData(1, 0);
         String reporteChart = "Content-Type: text/html; charset=\"UTF-8\"\n"
                         + "<img \n"
                         + "     style=\"-webkit-user-select: none; display: block; margin: auto; padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); cursor: zoom-in;\"\n"
