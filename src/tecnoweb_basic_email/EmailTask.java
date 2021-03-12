@@ -16,11 +16,10 @@ import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class EmailTask implements Callable<MailSender>  {
+public class EmailTask implements Callable<MailSender> {
 
-    
     String to, subject;
-    
+
     NAgenda nAgenda;
     NCita nCita;
     NConsulta nConsulta;
@@ -30,72 +29,95 @@ public class EmailTask implements Callable<MailSender>  {
     NReceta nReceta;
     NTratamiento nTratamiento;
     NUsuario nUsuario;
-    
-    
 
     public EmailTask(String to, String subject) {
-       this.to = to;
-       this.subject = subject;
-       this.nAgenda =new NAgenda();
-       this.nCita=new NCita();
-       this.nConsulta=new NConsulta();
-       this.nEspecialidad=new NEspecialidad();
-       this.nOdontologo=new NOdontologo();
-       this.nPaciente = new NPaciente();
-       this.nReceta=new NReceta();
-       this.nTratamiento=new NTratamiento();
-       this.nUsuario=new NUsuario();
+        this.to = to;
+        this.subject = subject;
+        this.nAgenda = new NAgenda();
+        this.nCita = new NCita();
+        this.nConsulta = new NConsulta();
+        this.nEspecialidad = new NEspecialidad();
+        this.nOdontologo = new NOdontologo();
+        this.nPaciente = new NPaciente();
+        this.nReceta = new NReceta();
+        this.nTratamiento = new NTratamiento();
+        this.nUsuario = new NUsuario();
     }
 
-    
-    public String verificarComandos() {
+    public String verificarComandos() throws IOException {
         String encabezado = "";
         String datos[] = null;
-        
-        LinkedList<Object> datosParseados= parseComando(encabezado, datos);
-        encabezado=(String)datosParseados.get(1);
-        datos=(String[])datosParseados.get(0);
-         String mensaje="";
+
+        LinkedList<Object> datosParseados = parseComando(encabezado, datos);
+        encabezado = (String) datosParseados.get(1);
+        datos = (String[]) datosParseados.get(0);
+        String mensaje = "";
         switch (encabezado) {
 
             // CU4: Gestionar Abogado
             case "crear_agenda":
-                mensaje=nAgenda.crear(datos);
-            break;
-           
-            
+                mensaje = nAgenda.crear(datos);
+                break;
+            case "listar_agenda":
+                mensaje = nAgenda.TablaHTML("Lista");
+            case "editar_agenda":
+                mensaje = nAgenda.Editar(datos);
+                break;
+            case "eliminar_agenda":
+                mensaje = nAgenda.Eliminar(datos[0]);
+                break;
             case "crear_cita":
-                mensaje=nCita.crear(datos);
-            break;
+                mensaje = nCita.crear(datos);
+                break;
+            case "eliminar_cita":
+                mensaje = nCita.Eliminar(datos[0]);
+                break;
             case "crear_consulta":
-                mensaje=nConsulta.crear(datos);
-            break;
+                mensaje = nConsulta.crear(datos);
+                break;
+            case "eliminar_consulta":
+                mensaje = nConsulta.Eliminar(datos[0]);
+                break;
             case "crear_especialidad":
-                mensaje=nEspecialidad.crear(datos);
-            break;
-            
-            case "reg_odontologo":  
-                 mensaje+= this.nUsuario.crear(Arrays.copyOfRange(datos,5,7));
-                 String[] odontologo=Arrays.copyOfRange(datos,0,6);
-                 odontologo[5]=this.nUsuario.getID(new String[]{"correo","contraseña"}, new String[]{datos[5],datos[6]});
-                 mensaje= this.nOdontologo.crear(odontologo);
+                mensaje = nEspecialidad.crear(datos);
+                break;
+            case "eliminar_especialidad":
+                mensaje = nEspecialidad.Eliminar(datos[0]);
+                break;
+
+            case "reg_odontologo":
+                mensaje += this.nUsuario.crear(Arrays.copyOfRange(datos, 5, 7));
+                String[] odontologo = Arrays.copyOfRange(datos, 0, 6);
+                odontologo[5] = this.nUsuario.getID(new String[]{"correo", "contraseña"}, new String[]{datos[5], datos[6]});
+                mensaje = this.nOdontologo.crear(odontologo);
+                break;
+            case "eliminar_odontologo":
+                mensaje = nOdontologo.Eliminar(datos[0]);
                 break;
             case "crear_paciente":
                 mensaje = this.nPaciente.crear(datos);
-            break;
+                break;
+            case "eliminar_paciente":
+                mensaje = nPaciente.Eliminar(datos[0]);
+                break;
             case "crear_receta":
-                mensaje=nReceta.crear(datos);
-            break;
+                mensaje = nReceta.crear(datos);
+                break;
+            case "eliminar_receta":
+                mensaje = nReceta.Eliminar(datos[0]);
+                break;
             case "crear_tratamiento":
-                mensaje=nTratamiento.crear(datos);
-            break;
-           
-            
+                mensaje = nTratamiento.crear(datos);
+                break;
+            case "eliminar_tratamiento":
+                mensaje = nTratamiento.Eliminar(datos[0]);
+                break;
+
             default:
                 mensaje = "La petición '" + this.subject + "' es incorrecta.";
 
                 break;
-             
+
         }
         return mensaje;
     }
@@ -108,7 +130,7 @@ public class EmailTask implements Callable<MailSender>  {
     public String registrarOdontologo(String[] datos) {
         String respuesta = "";
         try {
-            
+
             if (datos == null) {
                 return "No se aceptan datos nulos";
             }
@@ -124,7 +146,7 @@ public class EmailTask implements Callable<MailSender>  {
             respuesta += datos[6].length() < 8 ? "Contraseña de longitud no valida \n" : "";
 
             if (respuesta.length() == 0) {
-               // respuesta = this.nOdontologo.registrarOdontologo(Integer.parseInt(datos[0]), datos[1], datos[2], datos[3], datos[4], datos[5], datos[6]);
+                // respuesta = this.nOdontologo.registrarOdontologo(Integer.parseInt(datos[0]), datos[1], datos[2], datos[3], datos[4], datos[5], datos[6]);
             }
             return respuesta;
         } catch (Exception e) {
@@ -150,18 +172,20 @@ public class EmailTask implements Callable<MailSender>  {
         // only got here if we didn't return false
         return true;
     }
+
     /**
      * separa el encabezado y el cuerpo de un comando enviado en una string
+     *
      * @param encabezado
-     * @param cuerpo 
+     * @param cuerpo
      */
     private LinkedList<Object> parseComando(String encabezado, String[] datos) {
-        LinkedList<Object> parsedList= new LinkedList();
-         String sub = this.subject.trim();
+        LinkedList<Object> parsedList = new LinkedList();
+        String sub = this.subject.trim();
         String[] partesSubject = sub.split("\\[");
-        encabezado= partesSubject[0];
-         String cuerpo[] = partesSubject[1].split("\\]");
-        
+        encabezado = partesSubject[0];
+        String cuerpo[] = partesSubject[1].split("\\]");
+
         if (cuerpo.length != 0) {
             datos = cuerpo[0].split("\\;;");
             for (int i = 0; i < datos.length; i++) {
@@ -170,15 +194,78 @@ public class EmailTask implements Callable<MailSender>  {
         }
         parsedList.push(encabezado);
         parsedList.push(datos);
-       return parsedList;
+        return parsedList;
     }
 
     @Override
     public MailSender call() throws Exception {
         // TODO: Verificar las consultas, salta error cuando se
         // se llama a Negocio
-       
-        String resultadoVerificacion=this.verificarComandos();
-        return new MailSender(this.to,"Resultado",resultadoVerificacion);
+
+        String resultadoVerificacion = this.verificarComandos();
+        return new MailSender(this.to, "Resultado", resultadoVerificacion);
+    }
+
+    public String help() {
+        //Arreglo que se usara para la tabla
+
+        String[][] miTabla
+                = {{"Caso de uso", "Método", "Comando"},
+                {"CU1. Gestionar odontologo", "Registrar Odontologo", "reg_odontologo[int CI;; String nombre;;Date fNac[AAAA-MM-DD];;String celular ;;String Genero [M o F] ;; String Correo ;; String Contraseñ];"},
+                {"CU1. Gestionar odontologo", "Modificar  Odontologo", "mod_odontologo[int ci ;; String nombre ;; int celular  ;; String fecha de nacimiento(AAAA-MM-DD)] ;; String genero;"},
+                {"CU1. Gestionar odontologo", "Eliminar  Odontologo", "eliminar_odontologo[int id];"},
+                {"CU1. Gestionar odontologo", "Listar  Odontologos", "list_odontologo[];"},
+                {"CU1. Gestionar odontologo", "Encontrar  Odontologos", "find_odontologo[int ci];"}
+
+                };
+
+        String help = "Content-Type: text/html; charset=\"UTF-8\"\n"
+                + "\n"
+                + "<h1>Lista de Comandos  </h1>"
+                // + "<h2>Por favor no utilizar tildes (´) o (ñ) en los datos de los comandos</h2>"
+                // + "<h2>(Se acepta documentos tipo: .txt, .docx, .pdf, .jpg, .rar, .xmls) DEPENDIENTO DEL TAMAÑO DEL ARCHIVO EL TIEMPO DE EJECUCION DEL PROGRAMA SERÁ MAYOR</h2>"
+                + "<table style=\"border-collapse: collapse; width: 100%; border: 2px solid black;\">\n"
+                + "\n";
+        //Ponemos el encabezado
+        help += generarEncabezado(miTabla);
+        help += generarCuerpoTabla(miTabla);
+        //Ponemos el contenido del documento
+        return help;
+    }
+
+    private String generarCuerpoTabla(String[][] miTabla) {
+        String cuerpo = "";
+        for (int i = 1; i < miTabla.length; i++) {
+            cuerpo += "  <tr>\n"
+                    + "\n";
+            for (int j = 0; j < miTabla[i].length; j++) {
+                cuerpo += "    <td style = \"text-align: left; padding: 8px; border: 2px solid black;\">"
+                        + miTabla[i][j] + "</td>\n"
+                        + "\n";
+            }
+            cuerpo += "  </tr>\n"
+                    + "\n";
+        }
+        return cuerpo;
+    }
+
+    /**
+     * Genera el encabezado a partir de la primera fila de la matriz de strings
+     * que se le envie
+     *
+     * @param miTabla
+     * @return
+     */
+    private String generarEncabezado(String[][] miTabla) {
+        String encabezado = "<tr>\n"
+                + "\n";
+        for (int i = 0; i < miTabla[0].length; i++) {
+            encabezado += "<th style = \"text-align: left; padding: 8px; background-color: #4CAF50; color: white; border: 2px solid black;\">"
+                    + miTabla[0][i] + "</th>\n"
+                    + "\n";
+        }
+        encabezado += "  </tr>\n"
+                + "\n";
+        return encabezado;
     }
 }
