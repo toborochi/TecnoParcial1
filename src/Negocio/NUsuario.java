@@ -5,6 +5,7 @@
  */
 package Negocio;
 
+import Datos.DUsuario;
 import Datos.DZTable;
 
 /**
@@ -14,7 +15,7 @@ import Datos.DZTable;
 public class NUsuario extends Negocio{
     
     public NUsuario() {
-        super(new DZTable());
+        super(new DUsuario());
     }
     
 }
