@@ -62,7 +62,7 @@ public class EmailTask implements Callable<MailSender> {
                 mensaje = nAgenda.crear(datos);
                 break;
             case "list_agenda":
-                mensaje = nAgenda.TablaHTML("Lista");
+                mensaje = nAgenda.TablaHTML("Lista Agenda");
             case "mod_agenda":
                 mensaje = nAgenda.Editar(datos);
                 break;
@@ -73,7 +73,7 @@ public class EmailTask implements Callable<MailSender> {
                 mensaje = nCita.crear(datos);
                 break;
             case "listar_citas":
-                mensaje = nCita.TablaHTML("Lista");
+                mensaje = nCita.TablaHTML("Lista Citas");
                 break;
             case "mod_cita":
                 mensaje = nCita.Editar(datos);
@@ -86,7 +86,7 @@ public class EmailTask implements Callable<MailSender> {
                 mensaje = nConsulta.crear(datos);
                 break;
             case "listar_consultas":
-                mensaje = nConsulta.TablaHTML("Lista");
+                mensaje = nConsulta.TablaHTML("Lista Consultas");
                 break;
             case "mod_consulta":
                 mensaje = nConsulta.Editar(datos);
@@ -99,7 +99,7 @@ public class EmailTask implements Callable<MailSender> {
                 mensaje = nEspecialidad.crear(datos);
                 break;
             case "listar_especialidades":
-                mensaje = nEspecialidad.TablaHTML("Lista");
+                mensaje = nEspecialidad.TablaHTML("Lista Especialidades");
                 break;
             case "mod_especialidad":
                 mensaje = nEspecialidad.Editar(datos);
@@ -115,7 +115,7 @@ public class EmailTask implements Callable<MailSender> {
                 mensaje = this.nOdontologo.crear(odontologo);
                 break;
             case "listar_odontologos":
-                mensaje = nOdontologo.TablaHTML("Lista Pacientes");
+                mensaje = nOdontologo.TablaHTML("Lista Odontologos");
                 break;
             case "mod_odontologo":
                 mensaje = nOdontologo.Editar(datos);
