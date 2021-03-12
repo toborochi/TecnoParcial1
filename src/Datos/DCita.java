@@ -19,5 +19,11 @@ public class DCita extends Dato {
             "pacienteid",
             "agendaid"
         };
+        this.TYPES= new String[]{
+            Dato.Datatypes.TIME,
+            Dato.Datatypes.TIME,
+            Dato.Datatypes.INTEGER,
+            Dato.Datatypes.INTEGER
+        };
     }
 }

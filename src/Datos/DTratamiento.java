@@ -17,5 +17,9 @@ public class DTratamiento extends Dato {
             "nombre",
             "Especialidadid"
         };
+         this.TYPES= new String[]{
+            Dato.Datatypes.STRING,
+            Dato.Datatypes.INTEGER
+        };
     }
 }
