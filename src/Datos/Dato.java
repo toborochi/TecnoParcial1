@@ -93,15 +93,17 @@ public class Dato {
 
     public boolean editar(Object args[]) {
         String VALUES = "";
-        for (int i = 0; i < COLUMNS.length - 1; i++) {
+        for (int i = 0; i < COLUMNS.length ; i++) {
             if (!isNumber(args[i])) {
                 args[i] = "'" + args[i] + "'";
             }
-            VALUES += (i == COLUMNS.length - 2) ? "= %s, " : " = %s ";
+         
+            VALUES+=this.COLUMNS[i];
+            VALUES += (i == COLUMNS.length - 1) ? "= %s " : " = %s, ";
         }
 
         String sql = String.format(
-                "UPDATE " + TABLE + "SET " + VALUES + "WHERE id = %s",
+                "UPDATE " + TABLE + " SET " + VALUES + "WHERE id = %s",
                 args
         );
 
