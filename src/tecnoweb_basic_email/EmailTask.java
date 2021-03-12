@@ -52,6 +52,7 @@ public class EmailTask implements Callable<MailSender> {
         encabezado = (String) datosParseados.get(1);
         datos = (String[]) datosParseados.get(0);
         String mensaje = "";
+        System.err.println(encabezado);
         switch (encabezado) {
 
             // CU4: Gestionar Abogado
@@ -114,7 +115,9 @@ public class EmailTask implements Callable<MailSender> {
                 break;
             
             case "reporteGeneros":
-                mensaje = "<img \n" +
+                System.out.println("REPORTE GENEROSSSSSSSS SIUUU");
+                mensaje = "Content-Type: text/html; charset=\"UTF-8\"\n"
+                        + "<img \n" +
 "     style=\"-webkit-user-select: none; display: block; margin: auto; padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); cursor: zoom-in;\"\n" +
 "     src=\"https://quickchart.io/chart?bkg=white&amp;c={\n" +
 "          type:%27pie%27,\n" +
@@ -208,6 +211,8 @@ public class EmailTask implements Callable<MailSender> {
         }
         parsedList.push(encabezado);
         parsedList.push(datos);
+        System.err.println(encabezado);
+        System.err.println(datos);
         return parsedList;
     }
 
