@@ -284,7 +284,7 @@ public class EmailTask implements Callable<MailSender> {
                     {"CU1. Gestionar paciente", "Listar Paciente", "listar_pacientes[];"},
                     //  CU2 GESTIONAR ODONTÓLOGO
                     {"CU2. Gestionar odontologo", "Registrar Odontologo", "reg_odontologo[int CI;; String nombre;;Date fNac[AAAA-MM-DD];;String celular ;;String Genero (M o F) ;; String Correo ;; String Contrasena];"},
-                    {"CU2. Gestionar odontologo", "Modificar  Odontologo", "mod_odontologo[int id;;  String nombre ;; int celular  ;; String fecha de nacimiento(AAAA-MM-DD) ;; String genero];"},
+                    {"CU2. Gestionar odontologo", "Modificar  Odontologo", "mod_odontologo[int id;; int CI;; String nombre ;; int celular  ;; String fecha de nacimiento(AAAA-MM-DD) ;; String genero];"},
                     {"CU2. Gestionar odontologo", "Eliminar  Odontologo", "eliminar_odontologo[int id];"},
                     {"CU2. Gestionar odontologo", "Listar  Odontologos", "listar_odontologos[];"},
                     //  CU3 GESTIONAR RECETA
