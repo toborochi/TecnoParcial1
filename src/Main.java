@@ -16,7 +16,7 @@ public class Main {
                 Mail.getInstance().sendMail(emails + 1, emails_query);
                 emails = emails_query;
             }
-            
+
             System.out.println("Waiting to check new emails...");
             Thread.sleep(10000);
         }
